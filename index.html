@@ -1,335 +1,370 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NQ712C869"></script>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tjark j. schade — portfolio</title>
+<meta name="description" content="Portfolio of Tjark J. Schade — architecture, design, discourse.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<style>
+:root{--bg:#fff;--fg:#111;--lb:#CEF932;--h:clamp(220px,46vh,600px)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font-family:"Suisse Intl",Inter,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{-webkit-user-drag:none;user-select:none}
+.top{opacity:0;position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) 18px 0;font-size:12px;letter-spacing:-.01em;z-index:8;pointer-events:none}
+.hero{height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3vh}
+.hg{display:block;height:clamp(200px,40vh,480px);aspect-ratio:500/481;width:auto}
+.hero a{text-decoration:none}
+h1{font-family:"Suisse Works",Newsreader,Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.01em;font-size:clamp(1rem,1.7vw,1.5rem);margin:0;text-align:center;line-height:1}
+.proj{position:relative;height:calc(var(--h) + 10vh + 340px)}
+.scroller{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.scroller::-webkit-scrollbar{display:none}
+.strip{display:flex;align-items:flex-start;gap:6vw;height:100%;width:max-content;padding:7vh 24vw 0 calc(50vw - var(--h)*var(--r)/2)}
+.it{flex:none}
+.first{width:max(calc(var(--h)*var(--r)),320px)}
+.pic{display:block;height:var(--h);width:auto;max-width:none;flex:none}
+.cover{aspect-ratio:var(--r)}
+.more{aspect-ratio:1308/924}
+.fade{will-change:opacity,transform}
+.cap h2{font-weight:500;font-size:clamp(18px,1.6vw,26px);letter-spacing:-.03em;line-height:1.05;margin:26px 0 12px}
+.meta{font:400 11px/1.5 "Suisse Mono","JetBrains Mono",ui-monospace,monospace;color:#555;margin:0 0 18px}
+.desc{font:italic 400 15px/1.45 "Suisse Works",Newsreader,Georgia,serif;margin:0 auto;max-width:72ch}
+.hint{position:absolute;right:18px;bottom:calc(14px + env(safe-area-inset-bottom,0px));font:400 12px "Suisse Mono","JetBrains Mono",ui-monospace,monospace;color:#555;pointer-events:none}
+.end{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.end h2{font-weight:500;letter-spacing:-.04em;font-size:clamp(32px,6vw,96px);line-height:1;margin:0 0 14px}
+.count{position:fixed;left:18px;bottom:calc(14px + env(safe-area-inset-bottom,0px));font:400 11px "Suisse Mono","JetBrains Mono",ui-monospace,monospace;color:#555;z-index:8;pointer-events:none}
+.lb{position:fixed;inset:0;background:var(--lb);z-index:9;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.on{opacity:1;pointer-events:auto}
+.lbin{max-width:min(1100px,92vw);margin:0 auto;padding:64px 0 80px;display:flex;flex-direction:column;gap:18px}
+.lbin img{width:100%;aspect-ratio:1308/924;display:block;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.lbin img.in{opacity:1;transform:none}
+#lbx{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:18px;z-index:9;background:none;border:0;font:500 12px Inter,sans-serif;color:#111;padding:4px}
+
+.cap{width:min(92vw,820px);margin-left:50%;transform:translateX(-50%);text-align:center}
+.proj.end{height:70vh}
+.ht{position:fixed;left:0;top:0;z-index:8;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:max-content;white-space:nowrap;color:#fff;mix-blend-mode:difference;cursor:pointer;will-change:transform}
+.ht b,.ht span{display:block;will-change:transform}
+.top{display:none !important}
+.ht b{font-weight:700;font-size:clamp(20px,2.6vw,38px);letter-spacing:-.04em;line-height:1}
+.ht span{font-weight:400;font-size:clamp(13px,1.3vw,18px);letter-spacing:-.02em}
+.hg{cursor:pointer}
+.cvo{position:fixed;inset:0;z-index:9;overflow-y:auto;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);opacity:0;pointer-events:none;transition:opacity .4s}
+.cvo.on{opacity:1;pointer-events:auto}
+.cvp{position:relative;width:min(900px,92vw);margin:56px auto 64px;background:#fff;color:#000;padding:clamp(18px,4vw,46px);font-family:"Suisse Intl",Inter,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;box-shadow:0 24px 90px rgba(0,0,0,.14);transform:translateY(18px);transition:transform .5s}
+.cvo.on .cvp{transform:none}
+.cvh{display:grid;grid-template-columns:5fr 7fr;gap:20px;align-items:end;margin-bottom:clamp(28px,6vw,70px)}
+.cvh h2{font-weight:700;font-size:clamp(24px,3.6vw,42px);line-height:1;letter-spacing:-.045em;margin:0}
+.cvh p{font-weight:300;font-size:clamp(15px,2.3vw,27px);line-height:1.12;letter-spacing:-.025em;margin:0 0 0 clamp(0px,6vw,80px)}
+.cvg{display:grid;grid-template-columns:5fr 7fr;gap:clamp(18px,3.5vw,48px)}
+.cvp h3{font-weight:400;font-size:clamp(18px,2.1vw,26px);letter-spacing:-.03em;margin:0 0 clamp(18px,3vw,34px);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;line-height:1}
+.ed{margin:0 0 clamp(14px,2vw,22px)}
+.ed h4{font-weight:400;font-size:clamp(17px,2vw,25px);line-height:1.05;letter-spacing:-.035em;margin:0 0 6px}
+.ed sup{font-size:.5em;vertical-align:top;position:relative;top:.1em;letter-spacing:0}
+.ed .y{font-size:clamp(12px,1.05vw,14px);letter-spacing:-.01em;margin:0 0 8px}
+.ed p,.wk p{font-weight:300;font-size:clamp(12px,1.1vw,15px);line-height:1.35;letter-spacing:-.01em;margin:0}
+.sk{font-weight:300;font-size:clamp(12px,1.1vw,15px);line-height:1.4;letter-spacing:-.01em;margin:0 0 16px}
+.wk{display:grid;grid-template-columns:clamp(70px,22%,130px) 1fr;gap:clamp(10px,2vw,28px);margin:0 0 clamp(12px,1.6vw,20px)}
+.wk .d{text-align:right;font-weight:300;font-size:clamp(12px,1.15vw,16px);letter-spacing:-.01em;line-height:1.3;white-space:nowrap}
+.wk b{display:block;font-weight:700;font-size:clamp(12px,1.15vw,16px);letter-spacing:-.02em;line-height:1.25}
+.wk p{margin-top:8px}
+#cvx{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:18px;z-index:9;background:none;border:0;font:500 12px Inter,sans-serif;color:#111;padding:4px}
+@media (max-width:700px){.cvg{grid-template-columns:1fr}.cvh{grid-template-columns:1fr}.cvh p{margin:0}}
+#dots{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;transition:opacity .3s}
+#cursor{position:fixed;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:20;opacity:0;will-change:transform}
+@media (pointer:fine){*{cursor:none !important}}
+</style></head><body>
+<nav class="top"><span>tjark j. schade</span><span>architecture * design * discourse</span></nav>
+<div class="ht" id="ht"><b>tjark j. schade</b><span>architecture, design, discourse</span></div>
+<section class="hero" id="hero"><img class="hg" draggable="false" alt="" src="assets/img-01.gif"><a id="enter" href="#p1"><h1>&gt; enter</h1></a></section>
+<section class="proj" id="p1" style="--r:0.751"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="1" alt="how to care about a house" src="assets/img-02.jpg"><div class="cap"><h2>how to care about a house</h2><p class="meta">2025—2026<br>TU Delft Master Thesis, ExploreLab<br>Prof. Dr. Georg Vrachliotis, Rufus van den Ban<br>Berlin, Germany</p><p class="desc">is an investigation into the constraints, economies and stakeholders outside of the established architectural principal-agent relationship. Housing being a key political issue, concerns all levels of civil society and requires engagement across disciplines. Understanding the German Gründerzeit era and the urban built environment on a systemic level both legislative and materially, creates a framework for repairing economies of scale.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="2"><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="3"><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="4"><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="5"><img class="pic more fade" draggable="false" alt="" data-n="1" data-k="6"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p2" style="--r:0.739"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="2" alt="Re-Use Reparaturhaus" src="assets/img-03.jpg"><div class="cap"><h2>Re-Use Reparaturhaus</h2><p class="meta">2024<br>TU Vienna Bachelor Thesis, Hochbau 1<br>Ines Nizic<br>Vienna, Austria<br>#1 Austrian Steelbuilding Prize 2025<br><a href="https://archundkrach.de/repair-the-system" target="_blank" rel="noopener">archundkrach.de/repair-the-system</a></p><p class="desc">Realising the urban region of Vienna as a lively urban mine through planned demolitions, this project frames the materials and buildings through a lens of disassembly for re-building and education. The appreciation of the everyday, a transparent application of technology and construction, and the democratization of knowledge are the driving ideas behind this design. An idea to repair society.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="2" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="2" data-k="2"><img class="pic more fade" draggable="false" alt="" data-n="2" data-k="3"><img class="pic more fade" draggable="false" alt="" data-n="2" data-k="4"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p3" style="--r:0.702"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="3" alt="the eye of the master" src="assets/img-04.jpg"><div class="cap"><h2>the eye of the master</h2><p class="meta">2024—2025<br>Design Data Society, TU Delft MSc 1<br>Prof. Dr. Georg Vrachliotis, Angela Rout<br>Cambridge, UK</p><p class="desc">succeeding a techno-optimistic sentiment on artificial intelligence within the societal landscape, this project set out for parliamental organisation structures to ensure a responsible use within a health care context.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="3" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="3" data-k="2"><img class="pic more fade" draggable="false" alt="" data-n="3" data-k="3"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p4" style="--r:0.746"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="4" alt="Oedipus Rex and the Monster of the Anthropocene" src="assets/img-05.jpg"><div class="cap"><h2>Oedipus Rex and the Monster of the Anthropocene</h2><p class="meta">2025<br>Borders &amp; Territories, TU Delft<br>Dr. Marc Schoonderbeek<br>Ore Mountains, Germany/Czechia</p><p class="desc">situated in the Ore Mountain Region, this project makes tangible the territorial violence and force employed to extract minerals from ancient old terrain through theatre and stage.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="4" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="4" data-k="2"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p5" style="--r:0.708"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="5" alt="Curatorial Practices" src="assets/img-06.jpg"><div class="cap"><h2>Curatorial Practices</h2><p class="meta">2025<br>Building Audiences, TU Delft<br>Javier Alpa Fernandez, Adrien Ravon<br>Finse, Norway</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="5" data-k="1"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p6" style="--r:0.708"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="6" alt="IUAV Venice — Labour, Geographies of Work" src="assets/img-07.jpg"><div class="cap"><h2>IUAV Venice — Labour, Geographies of Work</h2><p class="meta">2025<br>Summer Workshop, TU Delft / IUAV Venice<br>Prof. Dr. Georg Vrachliotis, Angela Rout, Yağiz Söylev<br>Venice, Italy<br>Exhibition Design and Coordination</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="6" data-k="0"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p7" style="--r:0.681"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="7" alt="ARGUS" src="assets/img-08.jpg"><div class="cap"><h2>ARGUS</h2><p class="desc">Rebuilt and chaired the association into an open platform for facilitating student initiatives. Initiated and started a student-led lecture series in 2025, and enabled others to start out initiatives to facilitate a productive output to make student opinions heard and visible. Including workshops, a magazine, an annual graduation publication, board of studies participation and a podcast. Created a coherent visual identity and strategy, emphasizing the importance of visual communication.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="7" data-k="0"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p8" style="--r:0.711"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="8" alt="ARCH—BK" src="assets/img-09.jpg"><div class="cap"><h2>ARCH—BK</h2><p class="desc">working with the Department of Architecture of TU Delft and the Design Data Society Group to increase visibility and cohesive identity of their projects. Including website design, book research, poster design and the concept for digital presence on social media.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="8" data-k="0"></div></div><span class="hint">→</span></section>
+<section class="proj end"><h2>thank you :)</h2><p class="meta"><a href="https://tjarkscha.de" target="_blank" rel="noopener">tjarkscha.de</a></p></section>
+<div class="count" id="count"></div>
+<div class="lb" id="lb"><button id="lbx">close ×</button><div class="lbin" id="lbin"></div></div>
+<div class="cvo" id="cvo"><button id="cvx">close ×</button><div class="cvp" id="cvp"><div class="cvh"><h2>Tjark J. Schade<br>Curriculum Vitae</h2><p>* 1996 in Hamburg, Germany</p></div><div class="cvg"><div><h3>Education</h3><div class="ed"><h4>TU Delft <sup>(NL)</sup><br>M.Sc. Architecture</h4><p class="y">2024 — 2026</p><p>Thesis on adaptive reuse, policy frameworks, care-initiatives and political economy of the built environment. Research conducted partly in Berlin.</p></div><div class="ed"><h4>TU Wien <sup>(AT)</sup><br>B.Sc. Architecture</h4><p class="y">2021 — 2024</p><p>Thesis on re-use of materials, economies of repair and digitisation of material passports.</p></div><div class="ed"><h4>Hamburg School of Business Administration <sup>(GER)</sup><br>B.Sc. Business Administration (dual)</h4><p class="y">2014 — 2017</p></div><div class="ed"><h4>Apprenticeship Shipping Merchant, Kaufmann Ausbildung<br>Hamburg Chamber of Commerce <sup>(GER)</sup></h4><p class="y">2014 — 2016</p></div><div class="ed"><h4>Abitur<br>Humanistisches Gymnasium<br>Christianeum, Hamburg <sup>(GER)</sup></h4><p class="y">2014</p></div><h3 style="margin-top:clamp(24px,3.5vw,44px)">Awards</h3><div class="ed"><h4>Austrian Steelbuilding Prize 2025, awarded for Bachelor Thesis</h4></div><h3 style="margin-top:clamp(24px,3.5vw,44px)">Skills</h3><p class="sk">German, Native<br>English, Professional<br>Dutch, Basic</p><p class="sk">Proficient in Revit, Archicad, Rhino, Grasshopper/Karamba3D, Cinema4D and Redshift, Adobe Creative Suite, Microsoft Excel</p><p class="sk">Ultra Trail Running</p></div><div><h3>Work experience</h3><div class="wk"><div class="d">04/25 — 06/26</div><div><b>Student Assistant</b><b>TU Delft Architecture Dept. and Design Data Society Group</b><p>Research for book projects and creative direction including production of a new digital identity</p></div></div><div class="wk"><div class="d">04/25 — 06/26</div><div><b>Editorial Assistant</b><b>THE NEW OPEN, Delft</b><p>Exploring the potential and paradoxes of openness in architecture and design with critical optimism.</p></div></div><div class="wk"><div class="d">09/24 — 04/26</div><div><b>Chair</b><b>ARGUS, TU Delft Architecture Master Association</b><p>Restructuring the association into a platform for critical reflection and engagement within the architecture master programme at TU Delft. Hosted lectures, workshops and coordinated participation.</p></div></div><div class="wk"><div class="d">09/24 — 10/24</div><div><b>BKLS Architekten</b><b>Munich, Germany (remote)</b><p>Freelance work for an architectural competition, developing a concept and plans for an elementary school in Bavaria.</p></div></div><div class="wk"><div class="d">06/22 — 07/24</div><div><b>Part-time Employee</b><b>schneider+schumacher Architekten ZT GmbH</b><b>Vienna, Austria</b><p>Mainly working on competitions and further supporting on numerous projects building in existing context, tendering phase or currently in construction.</p></div></div><div class="wk"><div class="d">10/20 — 09/21</div><div><b>Business Analyst CCO Office</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Hamburg, Germany</b><p>Supporting the commercial director with fleet acquisitions, sales strategy and investment cases, focussing on decarbonisation. Participated in the in-house venture capital investment committee. Led introduction of new project management structures and IT solutions for budgeting and forecasting.</p></div></div><div class="wk"><div class="d">03/19 — 09/20</div><div><b>Business Analyst Tanker</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Hamburg, Germany</b><p>Assistant to the Managing Director for the Tanker and Gas division. Focussing on decarbonisation, alternative propulsion and increasing efficiency of the fleet. Providing a wide-ranging support with financial, strategic and contractual issues.</p></div></div><div class="wk"><div class="d">07/18 — 02/19</div><div><b>Management Trainee Programme</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Singapore, Cyprus, Newcastle (UK)</b><p>Participating in the Schulte Group‘s international management trainee programme. Focussing on software solutions, renewable energies, CFO Office and tanker owning business.</p></div></div><div class="wk"><div class="d">10/17 — 06/18</div><div><b>Technical Purchaser</b><b>Columbia Shipmanagement (Deutschland) GmbH</b><b>Hamburg, Germany</b><p>Fleet supply in accordance with international regulations and coordination of company warehouses.</p></div></div><div class="wk"><div class="d">10/14 — 09/17</div><div><b>Dual Student</b><b>Columbia Shipmanagement (Deutschland) GmbH</b><b>Hamburg, Germany</b><p>Alternating 3-month cycles of practical experience and academic study within the Schoeller Holding group.</p></div></div></div></div></div></div><canvas id="dots"></canvas><div id="cursor"></div>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5NQ712C869');
+(function(){
+var PAGES={"1": ["assets/img-10.jpg", "assets/img-11.jpg", "assets/img-12.jpg", "assets/img-13.jpg", "assets/img-14.jpg", "assets/img-15.jpg", "assets/img-16.jpg"], "2": ["assets/img-17.jpg", "assets/img-18.jpg", "assets/img-19.jpg", "assets/img-20.jpg", "assets/img-21.jpg"], "3": ["assets/img-22.jpg", "assets/img-23.jpg", "assets/img-24.jpg", "assets/img-25.jpg"], "4": ["assets/img-26.jpg", "assets/img-27.jpg", "assets/img-28.jpg"], "5": ["assets/img-29.jpg", "assets/img-30.jpg"], "6": ["assets/img-31.jpg"], "7": ["assets/img-32.jpg", "assets/img-33.jpg"], "8": ["assets/img-34.jpg", "assets/img-35.jpg"]};
+var W=innerWidth,H=innerHeight;
+addEventListener('resize',function(){W=innerWidth;H=innerHeight;});
+var hero=document.getElementById('hero'),hg=hero.querySelector('.hg'),count=document.getElementById('count'),lb=document.getElementById('lb'),lbin=document.getElementById('lbin');
+var ht=document.getElementById('ht'),htb=ht.querySelector('b'),hts=ht.querySelector('span'),dotsEl=document.getElementById('dots'),nav=document.querySelector('.top'),cvo=document.getElementById('cvo'),cvp=document.getElementById('cvp');
+var projs=[].slice.call(document.querySelectorAll('.proj')),fades=[].slice.call(document.querySelectorAll('.fade')),scrollers=[].slice.call(document.querySelectorAll('.scroller'));
+[].forEach.call(document.querySelectorAll('img[data-k]'),function(im){im.src=PAGES[im.dataset.n][im.dataset.k];});
+fades.forEach(function(el){el._sec=el.closest('.proj');el._pic=el.classList.contains('pic')?el:el.querySelector('.pic');});
+function sm(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
+function box(r,o,list){if(o>.12&&r.right>0&&r.left<W&&r.bottom>0&&r.top<H)list.push({l:r.left,t:r.top,r:r.right,b:r.bottom});}
+function tick(){
+  var y=scrollY,obs=[];
+  var ho=1-sm(H*.1,H*.7,y);hero.style.opacity=ho;
+  var hw=ht.offsetWidth,hh=ht.offsetHeight,pp=sm(0,H*.7,y),gTop=hg.getBoundingClientRect().top+y;
+  var sx=(W-hw)/2,sy=gTop-hh-16,ex=24,ey=sy;
+  ht.style.transform='translate3d('+(sx+(ex-sx)*pp)+'px,'+(sy+(ey-sy)*pp)+'px,0)';
+  htb.style.transform='translateX('+((hw-htb.offsetWidth)/2*(1-pp))+'px)';
+  hts.style.transform='translateX('+((hw-hts.offsetWidth)/2*(1-pp))+'px)';nav.style.opacity=sm(H*.5,H*.9,y);
+  var cvOn=cvo.classList.contains('on');dotsEl.style.opacity=lb.classList.contains('on')?0:1;
+  if(cvOn){box(cvp.getBoundingClientRect(),1,obs);}
+  else if(!lb.classList.contains('on')){
+    box(hg.getBoundingClientRect(),ho,obs);box(ht.getBoundingClientRect(),1,obs);
+    var best=0,bo=-1;
+    projs.forEach(function(s,i){var r=s.getBoundingClientRect();s._ov=1-sm(.28,.6,Math.abs(r.top+r.height/2-H/2)/H);if(s._ov>bo){bo=s._ov;best=i;}});
+    fades.forEach(function(el){
+      var r=el._pic.getBoundingClientRect(),cx=r.left+r.width/2;
+      var o=Math.min(sm(W*1.02,W*.8,cx),sm(-W*.2,W*.1,cx))*el._sec._ov;
+      el.style.opacity=o;el.style.transform='translateY('+((1-o)*20)+'px)';
+      box(r,o,obs);
+      var cp=el.querySelector('.cap');if(cp)box(cp.getBoundingClientRect(),o,obs);
+    });
+    count.textContent=(y>H*.6&&best<projs.length-1)?('0'+(best+1)).slice(-2)+' / 0'+(projs.length-1):'';
+  }else{
+    [].forEach.call(lbin.children,function(im){box(im.getBoundingClientRect(),1,obs);});
+  }
+  window.OBS=obs;
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+document.getElementById('enter').addEventListener('click',function(e){e.preventDefault();document.getElementById('p1').scrollIntoView({behavior:'smooth'});});
+scrollers.forEach(function(sc){
+  var down=false,sx=0,sl=0,moved=false;sc._l=0;
+  sc.addEventListener('scroll',function(){var dx=sc.scrollLeft-sc._l;sc._l=sc.scrollLeft;if(window.__kickX)window.__kickX(dx);},{passive:true});
+  sc.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=sc.scrollLeft;});
+  addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>5)moved=true;sc.scrollLeft=sl-dx;});
+  addEventListener('pointerup',function(){down=false;});
+  sc.addEventListener('click',function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false;}},true);
+});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{root:lb,threshold:.05});
+function openLB(n,k){
+  lbin.innerHTML='';
+  PAGES[n].forEach(function(s){var im=new Image();im.src=s;lbin.appendChild(im);io.observe(im);});
+  lb.classList.add('on');document.body.style.overflow='hidden';
+  lb.scrollTop=k?lbin.children[k].offsetTop-56:0;
+}
+function closeLB(){lb.classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('click',function(e){var t=e.target;if(t.classList&&t.classList.contains('pic')&&t.dataset.n)openLB(t.dataset.n,+t.dataset.k||0);});
+document.getElementById('lbx').addEventListener('click',closeLB);
+lb.addEventListener('click',function(e){if(e.target===lb||e.target===lbin)closeLB();});
+function openCV(){cvo.scrollTop=0;cvo.classList.add('on');document.body.style.overflow='hidden';}
+function closeCV(){cvo.classList.remove('on');if(!lb.classList.contains('on'))document.body.style.overflow='';}
+hg.addEventListener('click',openCV);ht.addEventListener('click',openCV);
+document.getElementById('cvx').addEventListener('click',closeCV);
+cvo.addEventListener('click',function(e){if(!cvp.contains(e.target))closeCV();});
+addEventListener('keydown',function(e){if(e.key==='Escape'){closeLB();closeCV();}});
+})();
 </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tjarkscha.de</title>
-    <style>
-        /* Version 1.2 */
-        body {
-            margin: 0;
-            overflow: hidden; /* Prevent scrolling */
-            height: 100vh; /* Set height to viewport height */
-            background-color: #e9e9e9; /* Updated background color */
-            position: relative;
-            touch-action: none; /* Prevent default touch actions like scrolling */
-        }        
-            .letter {
-            font-size: 18vw; /* Responsive font size based on viewport width */
-            position: absolute;
-            color: #333;
-            transition: transform 0.1s, color 0.1s, font-family 0.1s, font-weight 0.1s, font-size 0.1s;
-            cursor: pointer;
+<script>
+(function () {
+  var COLORS = ['#CEF932', '#0381ED', '#FC7B00', '#FF9FF3', '#009640', '#FBD12C', '#FF0C31', '#AE78D2'];
+  var COUNT = 16, SIZE = 20, R = SIZE / 2;
+  var FLEE_RADIUS = 100;      // kleiner Radius
+  var FLEE_FORCE = 5200;     // flink / nervös
+  var MAX_SPEED = 1500;
+  var BASE_SPEED = 32, IDLE = 14;
+
+  var canvas = document.getElementById('dots');
+  var ctx = canvas.getContext('2d');
+  var cursorEl = document.getElementById('cursor');
+  var W = 0, H = 0, dpr = 1, S = 1;
+  var ptr = { x: -9999, y: -9999, active: false };
+  var touchTimer = null;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var oW = W, oH = H;
+    W = window.innerWidth; H = window.innerHeight;
+    S = Math.max(0.8, Math.min(2.6, Math.min(W, H) / 700));
+    if (oW && oH && dots) { for (var k = 0; k < dots.length; k++) { dots[k].x *= W / oW; dots[k].y *= H / oH; } }
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var dots = [];
+  for (var i = 0; i < COUNT; i++) {
+    var a = Math.floor(Math.random() * 4) * Math.PI / 2;
+    dots.push({
+      x: W * (0.2 + Math.random() * 0.6), y: H * (0.2 + Math.random() * 0.6),
+      vx: Math.cos(a) * BASE_SPEED, vy: Math.sin(a) * BASE_SPEED,
+      heading: a, base: a, wobble: 0,
+      turn: 0,                                   // aktuelle Drehrate (rad/s)
+      speed: BASE_SPEED * (0.6 + Math.random() * 0.9),
+      t: 0, dur: 1, peak: 0, fleeCool: 0, nextBreak: 1, beatSeen: -1, ghost: 0, wig: 0, free: i % 3 === 2, freeT: 1 + Math.random() * 4,          // Zeit bis zum "Bahnwechsel"
+      color: COLORS[i % COLORS.length]
+    });
+  }
+
+  function onMove(e) {
+    ptr.x = e.clientX; ptr.y = e.clientY;
+    if (e.pointerType === 'mouse') {
+      ptr.active = true;
+      cursorEl.style.opacity = 1;
+      cursorEl.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+    }
+  }
+  window.addEventListener('pointermove', onMove, { passive: true });
+  window.addEventListener('pointerdown', function (e) {
+    onMove(e);
+    if (e.pointerType !== 'mouse') {
+      ptr.active = true;
+      clearTimeout(touchTimer);
+    }
+  }, { passive: true });
+  function touchEnd(e) {
+    if (e.pointerType !== 'mouse') {
+      clearTimeout(touchTimer);
+      touchTimer = setTimeout(function () { ptr.active = false; }, 450);
+    }
+  }
+  window.addEventListener('pointerup', touchEnd, { passive: true });
+  window.addEventListener('pointercancel', touchEnd, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () {
+    ptr.active = false; cursorEl.style.opacity = 0;
+  });
+
+  // Gemeinsamer Takt: alle Punkte sprinten im Beat, die Richtung folgt einem Muster
+  var beatN = 0, beatT = 0, BEAT = 3.6, pattern = 0;
+  function patternDir(d, i) {
+    var P = Math.PI / 2;
+    if (Math.random() < 0.08) { d.base = Math.floor(Math.random() * 4) * P; return; } // Ausreißer
+    if (pattern === 0) {            // Reihen: abwechselnd rechts/links
+      d.base = ((i + beatN) % 2 === 0) ? 0 : Math.PI;
+    } else if (pattern === 1) {     // Spalten: abwechselnd runter/hoch
+      d.base = ((i + beatN) % 2 === 0) ? P : -P;
+    } else if (pattern === 2) {     // Marsch im Quadrat, gegenläufig
+      d.base = (i % 2 ? 1 : -1) * beatN * P;
+    } else {                        // Atmen: vom Zentrum weg / zur Mitte hin
+      var dx = d.x - W / 2, dy = d.y - H / 2, out = (beatN % 2 === 0) ? 1 : -1;
+      if (Math.abs(dx) > Math.abs(dy)) d.base = (dx * out > 0) ? 0 : Math.PI;
+      else d.base = (dy * out > 0) ? P : -P;
+    }
+  }
+
+  // Sprint: Strecke + Dauer, Tempo folgt einer Glockenkurve (langsam → extrem schnell → langsam)
+  function newSprint(d, flee) {
+    function roomFor(b) {
+      var cx = Math.cos(b), cy = Math.sin(b);
+      return cx > 0.5 ? W - d.x : cx < -0.5 ? d.x : cy > 0.5 ? H - d.y : d.y;
+    }
+    var dist = (flee ? 70 + Math.random() * 100 : 150 + Math.random() * 50) * S;
+    d.dur = flee ? 0.3 + Math.random() * 0.2 : 0.7 + Math.random() * 0.15;
+    if (roomFor(d.base) < 60 * S) { d.base += Math.PI; }
+    dist = Math.min(dist, Math.max(30, roomFor(d.base) - R - 4));
+    d.t = 0;
+    d.peak = dist / (d.dur * 0.4244);
+  }
+
+  var kickX = 0; window.__kickX = function (dx) { kickX += dx; };
+  var scrollAcc = 0, lastSY = window.scrollY;
+  window.addEventListener("scroll", function () { var y = window.scrollY; scrollAcc += y - lastSY; lastSY = y; }, { passive: true });
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    ctx.clearRect(0, 0, W, H);
+    beatT += dt;
+    if (beatT >= BEAT) { beatT -= BEAT; beatN++; if (beatN % 4 === 0) pattern = (pattern + 1) % 4; }
+    var sa = Math.max(-200, Math.min(200, scrollAcc)); scrollAcc = 0;
+    var sxv = Math.max(-200, Math.min(200, kickX)); kickX = 0;
+
+    for (var i = 0; i < dots.length; i++) {
+      var d = dots[i];
+      if (sxv) { d.vx -= sxv * 6 * (0.6 + ((i * 37) % 80) / 100); }
+      if (sa) { var mm = 0.6 + ((i * 37) % 80) / 100; d.vy -= sa * 6 * mm; d.vx += (Math.random() - 0.5) * Math.abs(sa) * 5; }
+
+      // organisches Wandern: Drehrate driftet zufällig, wird zur Mitte zurückgezogen
+      d.turn += (Math.random() - 0.5) * 3 * dt;
+      d.turn *= (1 - 1.2 * dt);
+      d.wobble += d.turn * dt;
+      d.wobble *= (1 - 0.6 * dt);
+      d.wobble = Math.max(-0.2, Math.min(0.2, d.wobble));
+      d.heading = d.base + d.wobble;
+
+      // gelegentlich Bahn verlassen: leichter Richtungswechsel
+      d.t += dt; d.fleeCool -= dt; d.ghost -= dt;
+      if (d.free) { d.freeT -= dt; d.nextBreak = d.freeT <= 0 ? 0 : 1; }
+      else d.nextBreak = (d.beatSeen !== beatN && beatT >= (d.x / W) * 0.5) ? 0 : 1;
+      if (d.nextBreak <= 0) {
+        d.beatSeen = beatN; if (Math.random() < 0.05) d.ghost = 1 + Math.random() * 1.2;
+        if (d.free) { var cx = W / 2 - d.x, cy = H / 2 - d.y;
+          d.base = Math.random() < 0.4 ? (Math.abs(cx) > Math.abs(cy) ? (cx > 0 ? 0 : Math.PI) : (cy > 0 ? Math.PI / 2 : -Math.PI / 2)) : Math.floor(Math.random() * 4) * Math.PI / 2;
+          d.freeT = 2.8 + Math.random() * 3.2; }
+        else patternDir(d, i);
+        d.wobble += (Math.random() - 0.5) * 0.2;
+        d.turn += (Math.random() - 0.5) * 0.8;
+        newSprint(d, false);
+        d.nextBreak = d.dur + 0.1 + Math.random() * 0.7;
+      }
+
+      // Steuerung Richtung Wunschgeschwindigkeit
+      var u = Math.min(1, d.t / d.dur);
+      d.speed = IDLE * S + d.peak * Math.pow(Math.sin(Math.PI * u), 3);
+      var tx = Math.cos(d.heading) * d.speed;
+      var ty = Math.sin(d.heading) * d.speed;
+      d.vx += (tx - d.vx) * Math.min(1, 9 * dt);
+      d.vy += (ty - d.vy) * Math.min(1, 9 * dt);
+
+      // Ausweichen vor Cursor / Tap
+      if (ptr.active) {
+        var dx = d.x - ptr.x, dy = d.y - ptr.y;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        var FR = FLEE_RADIUS * S;
+        if (dist < FR) {
+          var k = 1 - dist / FR;
+          var f = FLEE_FORCE * k * k;
+          // leicht seitlich versetzt für organisches Ausscheren
+          var side = (Math.random() - 0.5) * 0.9;
+          var nx = dx / dist, ny = dy / dist;
+          d.vx += (nx - ny * side) * f * dt;
+          d.vy += (ny + nx * side) * f * dt;
+          d.base = Math.round(Math.atan2(d.vy, d.vx) / (Math.PI / 2)) * Math.PI / 2; d.wobble = 0;
+          if (!(d.fleeCool > 0)) { newSprint(d, true); d.nextBreak = d.dur + 0.1 + Math.random() * 0.5; d.fleeCool = 0.3; }
         }
-    </style>
-</head>
-<body>
-    <script>
-        
-        // Version 1.2
-        const text = 'tjark j. schade';
-        const letters = text.split('');
-        const body = document.body;
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const horizontalMargin = 12; // Horizontal margin value
-        const verticalMargin = 24;   // Vertical margin value
+      }
 
-        // Helper function to get random position with variation
-        function getRandomPosition(baseX, baseY, variation = 50) {
-            return [baseX + Math.random() * variation - variation / 2, baseY + Math.random() * variation - variation / 2];
+      // Tempolimit
+      var sp = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+      var ms = MAX_SPEED * S; if (sp > ms) { d.vx *= ms / sp; d.vy *= ms / sp; }
+
+      d.x += d.vx * dt;
+      d.y += d.vy * dt;
+
+      // Ränder: weich zurücklenken statt abprallen
+      var m = 20;
+      if (d.x < m) { d.vx += 400 * dt; d.base = 0; d.wobble = 0; }
+      if (d.x > W - m) { d.vx -= 400 * dt; d.base = Math.PI; d.wobble = 0; }
+      if (d.y < m) { d.vy += 400 * dt; d.base = Math.PI / 2; d.wobble = 0; }
+      if (d.y > H - m) { d.vy -= 400 * dt; d.base = -Math.PI / 2; d.wobble = 0; }
+      var obs = window.OBS || [];
+      if (!(d.ghost > 0)) {
+        for (var q = 0; q < obs.length; q++) {
+          var o = obs[q], mg = R + 2, L = o.l - mg, RR = o.r + mg, T = o.t - mg, B = o.b + mg;
+          if (d.x > L && d.x < RR && d.y > T && d.y < B) {
+            var dl = d.x - L, dr = RR - d.x, dtp = d.y - T, dbt = B - d.y, mn = Math.min(dl, dr, dtp, dbt);
+            if (mn === dl) { d.x = L; d.vx = Math.min(d.vx, 0); d.base = (d.vy >= 0 ? 1 : -1) * Math.PI / 2; }
+            else if (mn === dr) { d.x = RR; d.vx = Math.max(d.vx, 0); d.base = (d.vy >= 0 ? 1 : -1) * Math.PI / 2; }
+            else if (mn === dtp) { d.y = T; d.vy = Math.min(d.vy, 0); d.base = d.vx >= 0 ? 0 : Math.PI; }
+            else { d.y = B; d.vy = Math.max(d.vy, 0); d.base = d.vx >= 0 ? 0 : Math.PI; }
+            d.wobble = 0;
+          }
         }
+      }
+      d.x = Math.max(R, Math.min(W - R, d.x));
+      d.y = Math.max(R, Math.min(H - R, d.y));
 
-        // Set initial positions for letters in the row with slight variation
-        let startX = width / 2 - (text.length * 9) * (width / 100) / 2; // Centered starting position
-        const startY = height / 2;
-
-        // Adjust the positions for "j" and "a" to be within the string's layout
-        const letterPositions = {
-            't': [startX + 0 * (width / 100 * 9), startY],
-            'j': [startX + 1 * (width / 100 * 9), startY], // Position adjusted to be within string layout
-            'a': [startX + 2 * (width / 100 * 9), startY], // Position adjusted to be within string layout
-            'r': [startX + 3 * (width / 100 * 9), startY],
-            'k': [startX + 4 * (width / 100 * 9), startY],
-            ' ': [startX + 5 * (width / 100 * 9), startY],
-            'j': [startX + 6 * (width / 100 * 9), startY], // Position adjusted to be within string layout
-            '.': [startX + 7 * (width / 100 * 9), startY],
-            ' ': [startX + 8 * (width / 100 * 9), startY],
-            's': [startX + 9 * (width / 100 * 9), startY],
-            'c': [startX + 10 * (width / 100 * 9), startY],
-            'h': [startX + 11 * (width / 100 * 9), startY],
-            'a': [startX + 12 * (width / 100 * 9), startY], // Position adjusted to be within string layout
-            'd': [startX + 13 * (width / 100 * 9), startY],
-            'e': [startX + 14 * (width / 100 * 9), startY]
-        };
-
-        const initialPositions = {};
-        letters.forEach((letter) => {
-            const [left, top] = letterPositions[letter] ? getRandomPosition(letterPositions[letter][0], letterPositions[letter][1], 20) : getRandomPosition(startX + Math.random() * (width / 100 * 9), startY, 20);
-            initialPositions[letter] = [Math.max(horizontalMargin, Math.min(left, width - horizontalMargin)), Math.max(verticalMargin, Math.min(top, height - verticalMargin))];
-        });
-
-        // Random properties for letters
-        function getRandomProperties() {
-            const colors = [
-                'black',               // Classic Black
-                'rgb(0, 0, 255)',      // Bright Blue
-                'rgb(50, 220, 0)',     // Vibrant Green
-                'rgb(230, 70, 220)',   // Bright Magenta
-                'rgb(255, 115, 70)',   // Warm Orange
-                'rgb(0, 100, 0)',      // Deep Green
-                'rgb(255, 87, 34)',    // Rich Orange
-                'rgb(128, 0, 128)',    // Vivid Purple
-                'rgb(255, 20, 147)',   // Deep Pink
-                'rgb(100, 149, 237)',  // Cornflower Blue
-                'rgb(255, 69, 0)',     // Red-Orange
-                'rgb(50, 205, 50)',    // Lime Green
-                'rgb(255, 105, 180)'   // Hot Pink
-            ];
-            const fontFamilies = ['sans-serif', 'serif', 'Wingdings'];
-            const fontWeights = ['normal', 'bold'];
-
-            return {
-                color: Math.random() < 0.7 ? 'black' : colors[Math.floor(Math.random() * colors.length)],
-                fontFamily: Math.random() < 0.5 ? 'sans-serif' : 'serif', // Initially random but not Wingdings
-                fontWeight: fontWeights[Math.floor(Math.random() * fontWeights.length)],
-                fontSize: `${(Math.random() * 0.40 + 0.80) * 18}vw` // Font size within +/- 20% range of 18vw
-            };
-        }
-
-        function createLetterElement(letter) {
-            const span = document.createElement('span');
-            span.textContent = letter;
-            span.className = 'letter';
-
-            // Apply random styles
-            const { color, fontFamily, fontWeight, fontSize } = getRandomProperties();
-            span.style.color = color;
-            span.style.fontFamily = fontFamily;
-            span.style.fontWeight = fontWeight;
-            span.style.fontSize = fontSize;
-
-            // Position letters
-            const [initialLeft, initialTop] = initialPositions[letter] || [Math.random() * (width - 2 * horizontalMargin) + horizontalMargin, Math.random() * (height - 2 * verticalMargin) + verticalMargin];
-            span.style.left = `${initialLeft}px`;
-            span.style.top = `${initialTop}px`;
-
-            // Initialize rotation with a random value between -10 and +10 degrees
-            span.dataset.rotation = (Math.random() * 20 - 10).toFixed(2);
-            span.dataset.speedX = (Math.random() * 2 - 1) * 0.2;
-            span.dataset.speedY = (Math.random() * 2 - 1) * 0.2;
-            span.dataset.rotationSpeed = (Math.random() * 2 - 1) * 0.05;
-
-            // Click event for changing properties and spawning new letter
-            span.addEventListener('click', () => {
-                const properties = ['color', 'fontFamily', 'fontWeight', 'fontSize'];
-                let changed = false;
-
-                properties.forEach(property => {
-                    if (Math.random() > 0.5 || !changed) {
-                        changed = true;
-                        switch (property) {
-                            case 'color':
-                                const colors = [
-                                    'black',               // Classic Black
-                                    'rgb(0, 0, 255)',      // Bright Blue
-                                    'rgb(50, 220, 0)',     // Vibrant Green
-                                    'rgb(230, 70, 220)',   // Bright Magenta
-                                    'rgb(255, 115, 70)',   // Warm Orange
-                                    'rgb(0, 100, 0)',      // Deep Green
-                                    'rgb(255, 87, 34)',    // Rich Orange
-                                    'rgb(128, 0, 128)',    // Vivid Purple
-                                    'rgb(255, 20, 147)',   // Deep Pink
-                                    'rgb(100, 149, 237)',  // Cornflower Blue
-                                    'rgb(255, 69, 0)',     // Red-Orange
-                                    'rgb(50, 205, 50)',    // Lime Green
-                                    'rgb(255, 105, 180)'   // Hot Pink
-                                ];
-                                span.style.color = colors[Math.floor(Math.random() * colors.length)];
-                                break;
-                            case 'fontFamily':
-                                span.style.fontFamily = span.style.fontFamily === 'Wingdings' ? 'sans-serif' : 'Wingdings';
-                                break;
-                            case 'fontWeight':
-                                span.style.fontWeight = span.style.fontWeight === 'bold' ? 'normal' : 'bold';
-                                break;
-                            case 'fontSize':
-                                span.style.fontSize = `${(Math.random() * 0.40 + 0.80) * 18}vw`; // Font size within ±20% range
-                                break;
-                        }
-                    }
-                });
-
-                if (!changed) {
-                    // Apply random styles if no properties were changed
-                    const { color, fontFamily, fontWeight, fontSize } = getRandomProperties();
-                    span.style.color = color;
-                    span.style.fontFamily = fontFamily;
-                    span.style.fontWeight = fontWeight;
-                    span.style.fontSize = fontSize;
-                }
-
-                // Spawn new letter
-                const newLetter = createLetterElement(letter);
-                body.appendChild(newLetter);
-                letterElements.push(newLetter);
-            });
-
-            return span;
-        }
-
-        // Create and style initial letter elements
-        const letterElements = letters.map((letter) => {
-            const letterElement = createLetterElement(letter);
-            body.appendChild(letterElement);
-            return letterElement;
-        });
-
-        // Function to animate the letters with scrolling
-        function moveLetters(deltaY) {
-            letterElements.forEach(letter => {
-                let speedX = parseFloat(letter.dataset.speedX);
-                let speedY = parseFloat(letter.dataset.speedY);
-                let rotationSpeed = parseFloat(letter.dataset.rotationSpeed);
-                let left = parseFloat(letter.style.left);
-                let top = parseFloat(letter.style.top);
-
-                // Update rotation
-                let currentRotation = parseFloat(letter.dataset.rotation);
-                currentRotation += rotationSpeed;
-                letter.dataset.rotation = currentRotation;
-                letter.style.transform = `rotate(${currentRotation}deg)`;
-
-                // Update position
-                left += speedX * deltaY * 0.02;
-                top += speedY * deltaY * 0.02;
-
-                // Bounce off edges with margins
-                if (left < horizontalMargin) {
-                    left = horizontalMargin;
-                    speedX = -speedX;
-                    letter.dataset.speedX = speedX;
-                } else if (left + letter.offsetWidth > width - horizontalMargin) {
-                    left = width - horizontalMargin - letter.offsetWidth;
-                    speedX = -speedX;
-                    letter.dataset.speedX = speedX;
-                }
-
-                if (top < verticalMargin) {
-                    top = verticalMargin;
-                    speedY = -speedY;
-                    letter.dataset.speedY = speedY;
-                } else if (top + letter.offsetHeight > height - verticalMargin) {
-                    top = height - verticalMargin - letter.offsetHeight;
-                    speedY = -speedY;
-                    letter.dataset.speedY = speedY;
-                }
-
-                // Apply new position
-                letter.style.left = `${left}px`;
-                letter.style.top = `${top}px`;
-            });
-
-            requestAnimationFrame(() => moveLetters(deltaY));
-        }
-
-        function continuousMovement() {
-            letterElements.forEach(letter => {
-                let speedX = parseFloat(letter.dataset.speedX);
-                let speedY = parseFloat(letter.dataset.speedY);
-                let rotationSpeed = parseFloat(letter.dataset.rotationSpeed);
-                let left = parseFloat(letter.style.left);
-                let top = parseFloat(letter.style.top);
-
-                // Update rotation
-                let currentRotation = parseFloat(letter.dataset.rotation);
-                currentRotation += rotationSpeed;
-                letter.dataset.rotation = currentRotation;
-                letter.style.transform = `rotate(${currentRotation}deg)`;
-
-                // Update position
-                left += speedX * 3;
-                top += speedY * 3;
-
-                // Bounce off edges with margins
-                if (left < horizontalMargin) {
-                    left = horizontalMargin;
-                    speedX = -speedX;
-                    letter.dataset.speedX = speedX;
-                } else if (left + letter.offsetWidth > width - horizontalMargin) {
-                    left = width - horizontalMargin - letter.offsetWidth;
-                    speedX = -speedX;
-                    letter.dataset.speedX = speedX;
-                }
-
-                if (top < verticalMargin) {
-                    top = verticalMargin;
-                    speedY = -speedY;
-                    letter.dataset.speedY = speedY;
-                } else if (top + letter.offsetHeight > height - verticalMargin) {
-                    top = height - verticalMargin - letter.offsetHeight;
-                    speedY = -speedY;
-                    letter.dataset.speedY = speedY;
-                }
-
-                // Apply new position
-                letter.style.left = `${left}px`;
-                letter.style.top = `${top}px`;
-            });
-
-            requestAnimationFrame(continuousMovement);
-        }
-
-        let scrolling = false;
-        let scrollDelta = 0;
-        let transitionSpeed = 0.05;
-
-        function onScroll(event) {
-            scrolling = true;
-            scrollDelta = event.deltaY;
-            moveLetters(scrollDelta);
-
-            clearTimeout(window.scrollTimeout);
-            window.scrollTimeout = setTimeout(() => {
-                scrolling = false;
-            }, 500);
-        }
-
-        // Add both wheel and touch event listeners
-        window.addEventListener('wheel', onScroll);
-        window.addEventListener('touchmove', (event) => {
-            event.preventDefault();
-            const deltaY = event.touches[0].clientY - (lastTouchY || event.touches[0].clientY);
-            lastTouchY = event.touches[0].clientY;
-            onScroll({ deltaY });
-        });
-
-        let lastTouchY = 0;
-
-        function animate() {
-            if (scrolling) {
-                letterElements.forEach(letter => {
-                    let currentSpeedX = parseFloat(letter.dataset.speedX);
-                    let currentSpeedY = parseFloat(letter.dataset.speedY);
-                    letter.dataset.speedX = currentSpeedX + (currentSpeedX - currentSpeedX) * transitionSpeed;
-                    letter.dataset.speedY = currentSpeedY + (currentSpeedY - currentSpeedY) * transitionSpeed;
-                });
-                requestAnimationFrame(animate);
-            } else {
-                requestAnimationFrame(continuousMovement);
-            }
-        }
-
-        animate();
-    </script>
-</body>
-</html>
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, R, 0, Math.PI * 2);
+      ctx.fillStyle = d.color;
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body></html>
