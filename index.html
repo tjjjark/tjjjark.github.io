@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tjark j. schade — portfolio</title>
+<meta name="description" content="Portfolio of Tjark J. Schade — architecture, design, discourse.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<script>
+/* Suisse fonts (Swiss Typefaces EULA, licensee: Tjark Schade). The licence allows embedding only on a website whose domain the licensee owns,
+   so the fonts are only loaded on tjarkscha.de (and locally for testing). Anywhere else the fallback fonts are used. */
+(function(){
+  var h=location.hostname;
+  if(['tjarkscha.de','www.tjarkscha.de','localhost','127.0.0.1',''].indexOf(h)<0)return;
+  var f=function(fam,file,w,st){return '@font-face{font-family:"'+fam+'";src:url(fonts/'+file+'.woff2) format("woff2");font-weight:'+w+';font-style:'+(st||'normal')+';font-display:swap}';};
+  var st=document.createElement('style');
+  st.textContent=[f('Suisse Intl','SuisseIntl-Light',300),f('Suisse Intl','SuisseIntl-Regular',400),f('Suisse Intl','SuisseIntl-Medium',500),f('Suisse Intl','SuisseIntl-Bold',700),
+    f('Suisse Mono','SuisseIntlMono-Regular',400),f('Suisse Works','SuisseWorks-Regular',400),f('Suisse Works','SuisseWorks-RegularItalic',400,'italic')].join('\n');
+  document.head.appendChild(st);
+})();
+</script>
+<style>
+:root{--bg:#fff;--fg:#111;--lb:#CEF932;--h:clamp(220px,46vh,600px)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font-family:"Suisse Intl",Inter,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{-webkit-user-drag:none;user-select:none}
+.top{opacity:0;position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) 18px 0;font-size:12px;letter-spacing:-.01em;z-index:8;pointer-events:none}
+.hero{height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3vh}
+.hg{display:block;height:clamp(200px,40vh,480px);aspect-ratio:500/481;width:auto}
+.hero a{text-decoration:none}
+h1{font-family:"Suisse Works",Newsreader,Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.01em;font-size:clamp(1rem,1.7vw,1.5rem);margin:0;text-align:center;line-height:1}
+.proj{position:relative;height:calc(var(--h) + 10vh + 340px)}
+.scroller{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+.scroller::-webkit-scrollbar{display:none}
+.strip{display:flex;align-items:flex-start;gap:6vw;height:100%;width:max-content;padding:7vh 24vw 0 calc(50vw - var(--h)*var(--r)/2)}
+.it{flex:none}
+.first{width:calc(var(--h)*var(--r))}
+.pic{display:block;height:var(--h);width:auto;max-width:none;flex:none}
+.cover{aspect-ratio:var(--r)}
+.more{aspect-ratio:1962/1386}
+.fade{will-change:opacity,transform}
+.cap h2{font-weight:500;font-size:clamp(18px,1.6vw,26px);letter-spacing:-.03em;line-height:1.05;margin:26px 0 12px}
+.meta{font:400 11px/1.5 "Suisse Mono","JetBrains Mono",ui-monospace,monospace;color:#555;margin:0 0 18px}
+.desc{font:italic 400 15px/1.45 "Suisse Works",Newsreader,Georgia,serif;margin:0 auto;max-width:72ch}
+.hint{position:absolute;right:18px;bottom:calc(14px + env(safe-area-inset-bottom,0px));font:400 12px "Suisse Mono","JetBrains Mono",ui-monospace,monospace;color:#555;pointer-events:none}
+.end{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.end h2{font-weight:500;letter-spacing:-.04em;font-size:clamp(32px,6vw,96px);line-height:1;margin:0 0 14px}
+.lb{position:fixed;inset:0;background:var(--lb);z-index:9;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.on{opacity:1;pointer-events:auto}
+.lbin{max-width:min(1100px,92vw);margin:0 auto;padding:64px 0 80px;display:flex;flex-direction:column;gap:18px}
+.lbin img{width:min(100%,calc(86vh*var(--ar,1.41)));align-self:center;display:block;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.lbin img.in{opacity:1;transform:none}
+#lbx{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:18px;z-index:9;background:none;border:0;font:500 12px Inter,sans-serif;color:#111;padding:4px}
+
+.cap{width:min(92vw,820px);margin-left:50%;transform:translateX(-50%);text-align:center}
+.proj.end{height:70vh}
+.ht{position:fixed;left:0;top:0;z-index:8;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:max-content;white-space:nowrap;color:#fff;mix-blend-mode:difference;cursor:pointer;will-change:transform}
+.ht b,.ht span{display:block;will-change:transform}
+.top{display:none !important}
+.sb,.sc{position:fixed;left:0;top:0;z-index:8;pointer-events:none;opacity:0;will-change:transform,opacity}
+.sb{color:#fff;mix-blend-mode:difference;font:400 11px/1 "Suisse Mono","JetBrains Mono",ui-monospace,monospace;width:1px;height:1px}
+.sbl{position:absolute;left:0;top:40px;white-space:nowrap;transition:opacity .16s}
+.sc{width:1px;height:1px;z-index:7;mix-blend-mode:difference}
+.sc u{position:absolute;left:5px;top:0;width:1px;background:rgba(255,255,255,.3)}
+.sc i{position:absolute;border-radius:50%;background:#fff}
+.sc i.x{border-radius:0;background:linear-gradient(#fff,#fff) center/1px 100% no-repeat,linear-gradient(#fff,#fff) center/100% 1px no-repeat}
+.sc b{position:absolute;left:5px;top:0;width:1px;height:1px}
+#fly{position:fixed;left:0;top:0;z-index:8;width:60px;height:60px;pointer-events:none;transform-origin:30px 30px;will-change:transform}
+.ht b{font-weight:700;font-size:clamp(20px,2.6vw,38px);letter-spacing:-.04em;line-height:1}
+.ht span{font-weight:400;font-size:clamp(13px,1.3vw,18px);letter-spacing:-.02em}
+#enter{display:block;padding:10px 40px;line-height:0;-webkit-tap-highlight-color:transparent}
+#mo{display:block;overflow:visible}
+.hg{cursor:pointer}
+.cvo{position:fixed;inset:0;z-index:9;overflow-y:auto;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);opacity:0;pointer-events:none;transition:opacity .4s}
+.cvo.on{opacity:1;pointer-events:auto}
+.cvp{position:relative;width:min(900px,92vw);margin:56px auto 64px;background:#fff;color:#000;padding:clamp(18px,4vw,46px);font-family:"Suisse Intl",Inter,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;box-shadow:0 24px 90px rgba(0,0,0,.14);transform:translateY(18px);transition:transform .5s}
+.cvo.on .cvp{transform:none}
+.cvh{display:grid;grid-template-columns:5fr 7fr;gap:20px;align-items:end;margin-bottom:clamp(28px,6vw,70px)}
+.cvh h2{font-weight:700;font-size:clamp(24px,3.6vw,42px);line-height:1;letter-spacing:-.045em;margin:0}
+.cvh p{font-weight:300;font-size:clamp(15px,2.3vw,27px);line-height:1.12;letter-spacing:-.025em;margin:0 0 0 clamp(0px,6vw,80px)}
+.cvg{display:grid;grid-template-columns:5fr 7fr;gap:clamp(18px,3.5vw,48px)}
+.cvp h3{font-weight:400;font-size:clamp(18px,2.1vw,26px);letter-spacing:-.03em;margin:0 0 clamp(18px,3vw,34px);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;line-height:1}
+.ed{margin:0 0 clamp(14px,2vw,22px)}
+.ed h4{font-weight:400;font-size:clamp(17px,2vw,25px);line-height:1.05;letter-spacing:-.035em;margin:0 0 6px}
+.ed sup{font-size:.5em;vertical-align:top;position:relative;top:.1em;letter-spacing:0}
+.ed .y{font-size:clamp(12px,1.05vw,14px);letter-spacing:-.01em;margin:0 0 8px}
+.ed p,.wk p{font-weight:300;font-size:clamp(12px,1.1vw,15px);line-height:1.35;letter-spacing:-.01em;margin:0}
+.sk{font-weight:300;font-size:clamp(12px,1.1vw,15px);line-height:1.4;letter-spacing:-.01em;margin:0 0 16px}
+.wk{display:grid;grid-template-columns:clamp(70px,22%,130px) 1fr;gap:clamp(10px,2vw,28px);margin:0 0 clamp(12px,1.6vw,20px)}
+.wk .d{text-align:right;font-weight:300;font-size:clamp(12px,1.15vw,16px);letter-spacing:-.01em;line-height:1.3;white-space:nowrap}
+.wk b{display:block;font-weight:700;font-size:clamp(12px,1.15vw,16px);letter-spacing:-.02em;line-height:1.25}
+.wk p{margin-top:8px}
+#cvx{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:18px;z-index:9;background:none;border:0;font:500 12px Inter,sans-serif;color:#111;padding:4px}
+@media (max-width:700px){.cvg{grid-template-columns:1fr}.cvh{grid-template-columns:1fr}.cvh p{margin:0}}
+@media (max-width:700px){
+.hg{height:clamp(140px,28vh,336px)}
+.proj{height:auto}
+.scroller{position:relative;inset:auto}
+.strip{height:auto;gap:4vw;padding-bottom:14vh}
+.pic.more{height:auto;width:min(84vw,calc(var(--ar,1.41)*80vw))}
+.scroller{scroll-snap-type:x proximity}
+.first,.pic.more{scroll-snap-align:center}
+.hint{bottom:auto;top:calc(var(--h) + 7vh + 10px)}
+}
+#dots.neg{mix-blend-mode:difference}
+#dots{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;transition:opacity .3s}
+#cursor{position:fixed;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:20;opacity:0;will-change:transform}
+@media (pointer:fine){*{cursor:none !important}}
+</style></head><body>
+<nav class="top"><span>tjark j. schade</span><span>architecture * design * discourse</span></nav>
+<div class="sb" id="sb"><span class="sbl" id="sbl"></span></div>
+<div class="sc" id="sc"></div>
+<div class="ht" id="ht"><b>tjark j. schade</b><span>architecture, design, discourse</span></div>
+<section class="hero" id="hero"><img class="hg" draggable="false" alt="" src="assets/img-01.gif"><a id="enter" href="#p1" aria-label="scroll"><span id="ph" style="display:block;width:60px;height:60px"></span></a></section>
+<div id="fly"><svg id="mo" viewBox="-30 -30 60 60" width="60" height="60" aria-hidden="true"><g id="mog" fill="none" stroke-linecap="round" stroke-linejoin="round"><line/><line/><line/></g></svg></div>
+<section class="proj" id="p1" style="--r:0.751"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="1" alt="how to care about a house" src="assets/img-02.jpg"><div class="cap"><h2>how to care about a house</h2><p class="meta">2025—2026<br>TU Delft Master Thesis, ExploreLab<br>Prof. Dr. Georg Vrachliotis, Rufus van den Ban<br>Berlin, Germany</p><p class="desc">is an investigation into the constraints, economies and stakeholders outside of the established architectural principal-agent relationship. Housing being a key political issue, concerns all levels of civil society and requires engagement across disciplines. Understanding the German Gründerzeit era and the urban built environment on a systemic level both legislative and materially, creates a framework for repairing economies of scale.</p></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="10"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="11"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="12"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="13"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="14"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="15"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="16"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="17"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="18"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="19"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="20"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="21"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="22"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="23"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="24"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="25"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="26"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="27"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="28"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="29"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="30"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="31"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="32"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="33"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="34"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="35"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="36"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="37"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="38"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="39"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="1" data-k="40"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p8" style="--r:0.681"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="8" alt="ARGUS" src="assets/img-08.jpg"><div class="cap"><h2>ARGUS</h2><p class="desc">Rebuilt and chaired the association into an open platform for facilitating student initiatives. Initiated and started a student-led lecture series in 2025, and enabled others to start out initiatives to facilitate a productive output to make student opinions heard and visible. Including workshops, a magazine, an annual graduation publication, board of studies participation and a podcast. Created a coherent visual identity and strategy, emphasizing the importance of visual communication.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="8" data-k="0"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p2" style="--r:0.789"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="2" alt="Men &amp; Feminism" src="assets/ws-men-feminism.jpg"><div class="cap"><h2>Men &amp; Feminism — What comes after awareness? Toward action</h2><p class="meta">2026<br>BK Feminist Week, TU Delft<br>Co-hosted workshop, Hall C<br>Delft, Netherlands</p><p class="desc">The second instalment of this session invited men who are curious, uncertain, or committed to feminist values to confront what comes after awareness, and what responsibility looks like in a time of polycrisis. Together, we explored what feminist practice can look like in everyday life, work and collective settings — moving from reflection to action.</p></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="2" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="2" data-k="2"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p7" style="--r:0.708"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="7" alt="IUAV Venice — Labour, Geographies of Work" src="assets/img-07.jpg"><div class="cap"><h2>IUAV Venice — Labour, Geographies of Work</h2><p class="meta">2025<br>Summer Workshop, TU Delft / IUAV Venice<br>Prof. Dr. Georg Vrachliotis, Angela Rout, Yağiz Söylev<br>Venice, Italy<br>Exhibition Design and Coordination</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="7" data-k="0"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p6" style="--r:0.708"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="6" alt="Curatorial Practices" src="assets/img-06.jpg"><div class="cap"><h2>Curatorial Practices</h2><p class="meta">2025<br>Building Audiences, TU Delft<br>Javier Alpa Fernandez, Adrien Ravon<br>Finse, Norway</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="6" data-k="1"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p9" style="--r:0.726"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="9" alt="ARCH—BK" src="assets/arch-bk/01.jpg"><div class="cap"><h2>ARCH—BK</h2><p class="desc">working with the Department of Architecture of TU Delft and the Design Data Society Group to increase visibility and cohesive identity of their projects. Including website design, book research, poster design and the concept for digital presence on social media.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="9" data-k="0"><img class="pic more fade" draggable="false" alt="" data-n="9" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="9" data-k="2"><img class="pic more fade" draggable="false" alt="" data-n="9" data-k="3"><img class="pic more fade" draggable="false" alt="" data-n="9" data-k="4"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p5" style="--r:0.746"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="5" alt="Oedipus Rex and the Monster of the Anthropocene" src="assets/img-05.jpg"><div class="cap"><h2>Oedipus Rex and the Monster of the Anthropocene</h2><p class="meta">2025<br>Borders &amp; Territories, TU Delft<br>Dr. Marc Schoonderbeek<br>Ore Mountains, Germany/Czechia</p><p class="desc">situated in the Ore Mountain Region, this project makes tangible the territorial violence and force employed to extract minerals from ancient old terrain through theatre and stage.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="5" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="5" data-k="2"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p4" style="--r:0.702"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="4" alt="the eye of the master" src="assets/img-04.jpg"><div class="cap"><h2>the eye of the master</h2><p class="meta">2024—2025<br>Design Data Society, TU Delft MSc 1<br>Prof. Dr. Georg Vrachliotis, Angela Rout<br>Cambridge, UK</p><p class="desc">succeeding a techno-optimistic sentiment on artificial intelligence within the societal landscape, this project set out for parliamental organisation structures to ensure a responsible use within a health care context.</p></div></article><img class="pic more fade" draggable="false" alt="" data-n="4" data-k="1"><img class="pic more fade" draggable="false" alt="" data-n="4" data-k="2"><img class="pic more fade" draggable="false" alt="" data-n="4" data-k="3"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p16" style="--r:1.417"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="16" alt="Material explorations" src="assets/material-explorations/01-stones.jpg"><div class="cap"><h2>Material explorations</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="16" data-k="10"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p3" style="--r:0.739"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="3" alt="Re-Use Reparaturhaus" src="assets/img-03.jpg"><div class="cap"><h2>Re-Use Reparaturhaus</h2><p class="meta">2024<br>TU Vienna Bachelor Thesis, Hochbau 1<br>Ines Nizic<br>Vienna, Austria<br>#1 Austrian Steelbuilding Prize 2025<br><a href="https://archundkrach.de/repair-the-system" target="_blank" rel="noopener">archundkrach.de/repair-the-system</a></p><p class="desc">Realising the urban region of Vienna as a lively urban mine through planned demolitions, this project frames the materials and buildings through a lens of disassembly for re-building and education. The appreciation of the everyday, a transparent application of technology and construction, and the democratization of knowledge are the driving ideas behind this design. An idea to repair society.</p></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="10"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="3" data-k="11"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p10" style="--r:0.953"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="10" alt="Kulturfabrik" src="assets/kulturfabrik/01-cover-render.jpg"><div class="cap"><h2>Kulturfabrik</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="10"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="11"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="12"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="13"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="14"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="15"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="16"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="17"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="18"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="10" data-k="19"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p12" style="--r:0.706"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="12" alt="Parkhouse" src="assets/placeholder-vertical.png"><div class="cap"><h2>Parkhouse</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="10"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="11"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="12"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="13"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="14"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="15"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="16"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="12" data-k="17"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p11" style="--r:1.054"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="11" alt="Repair—Link" src="assets/repair-link/01-cover.jpg"><div class="cap"><h2>Repair—Link</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="7"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="8"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="9"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="10"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="11"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="12"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="13"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="11" data-k="14"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p13" style="--r:1.017"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="13" alt="Ostbahnhof Graz" src="assets/ostbahnhof-graz/01-visualisation.jpg"><div class="cap"><h2>Ostbahnhof Graz</h2></div></article></div></div><span class="hint">→</span></section>
+<section class="proj" id="p14" style="--r:0.735"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="14" alt="A sense of wondering" src="assets/sense-of-wondering/01-rock-photo.jpg"><div class="cap"><h2>A sense of wondering</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="5"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="6"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="14" data-k="7"></div></div><span class="hint">→</span></section>
+<section class="proj" id="p15" style="--r:0.652"><div class="scroller"><div class="strip"><article class="it first fade"><img class="pic cover" draggable="false" data-n="15" alt="Objects" src="assets/objects/01-welding.jpg"><div class="cap"><h2>Objects</h2></div></article><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="15" data-k="1"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="15" data-k="2"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="15" data-k="3"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="15" data-k="4"><img class="pic more fade" draggable="false" alt="" loading="lazy" data-n="15" data-k="5"></div></div><span class="hint">→</span></section>
+<section class="proj end"><h2>thank you :)</h2><p class="meta"><a href="https://tjarkscha.de" target="_blank" rel="noopener">tjarkscha.de</a></p></section>
+<div class="lb" id="lb"><button id="lbx">close ×</button><div class="lbin" id="lbin"></div></div>
+<div class="cvo" id="cvo"><button id="cvx">close ×</button><div class="cvp" id="cvp"><div class="cvh"><h2>Tjark J. Schade<br>Curriculum Vitae</h2><p>* 1996 in Hamburg, Germany</p></div><div class="cvg"><div><h3>Education</h3><div class="ed"><h4>TU Delft <sup>(NL)</sup><br>M.Sc. Architecture</h4><p class="y">2024 — 2026</p><p>Thesis on adaptive reuse, policy frameworks, care-initiatives and political economy of the built environment. Research conducted partly in Berlin.</p></div><div class="ed"><h4>TU Wien <sup>(AT)</sup><br>B.Sc. Architecture</h4><p class="y">2021 — 2024</p><p>Thesis on re-use of materials, economies of repair and digitisation of material passports.</p></div><div class="ed"><h4>Hamburg School of Business Administration <sup>(GER)</sup><br>B.Sc. Business Administration (dual)</h4><p class="y">2014 — 2017</p></div><div class="ed"><h4>Apprenticeship Shipping Merchant, Kaufmann Ausbildung<br>Hamburg Chamber of Commerce <sup>(GER)</sup></h4><p class="y">2014 — 2016</p></div><div class="ed"><h4>Abitur<br>Humanistisches Gymnasium<br>Christianeum, Hamburg <sup>(GER)</sup></h4><p class="y">2014</p></div><h3 style="margin-top:clamp(24px,3.5vw,44px)">Awards</h3><div class="ed"><h4>Austrian Steelbuilding Prize 2025, awarded for Bachelor Thesis</h4></div><h3 style="margin-top:clamp(24px,3.5vw,44px)">Skills</h3><p class="sk">German, Native<br>English, Professional<br>Dutch, Basic</p><p class="sk">Proficient in Revit, Archicad, Rhino, Grasshopper/Karamba3D, Cinema4D and Redshift, Adobe Creative Suite, Microsoft Excel</p><p class="sk">:)</p></div><div><h3>Work experience</h3><div class="wk"><div class="d">04/25 — 06/26</div><div><b>Student Assistant</b><b>TU Delft Architecture Dept. and Design Data Society Group</b><p>Research for book projects and creative direction including production of a new digital identity</p></div></div><div class="wk"><div class="d">04/25 — 06/26</div><div><b>Editorial Assistant</b><b>THE NEW OPEN, Delft</b><p>Exploring the potential and paradoxes of openness in architecture and design with critical optimism.</p></div></div><div class="wk"><div class="d">09/24 — 04/26</div><div><b>Chair</b><b>ARGUS, TU Delft Architecture Master Association</b><p>Restructuring the association into a platform for critical reflection and engagement within the architecture master programme at TU Delft. Hosted lectures, workshops and coordinated participation.</p></div></div><div class="wk"><div class="d">09/24 — 10/24</div><div><b>BKLS Architekten</b><b>Munich, Germany (remote)</b><p>Freelance work for an architectural competition, developing a concept and plans for an elementary school in Bavaria.</p></div></div><div class="wk"><div class="d">06/22 — 07/24</div><div><b>Part-time Employee</b><b>schneider+schumacher Architekten ZT GmbH</b><b>Vienna, Austria</b><p>Mainly working on competitions and further supporting on numerous projects building in existing context, tendering phase or currently in construction.</p></div></div><div class="wk"><div class="d">10/20 — 09/21</div><div><b>Business Analyst CCO Office</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Hamburg, Germany</b><p>Supporting the commercial director with fleet acquisitions, sales strategy and investment cases, focussing on decarbonisation. Participated in the in-house venture capital investment committee. Led introduction of new project management structures and IT solutions for budgeting and forecasting.</p></div></div><div class="wk"><div class="d">03/19 — 09/20</div><div><b>Business Analyst Tanker</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Hamburg, Germany</b><p>Assistant to the Managing Director for the Tanker and Gas division. Focussing on decarbonisation, alternative propulsion and increasing efficiency of the fleet. Providing a wide-ranging support with financial, strategic and contractual issues.</p></div></div><div class="wk"><div class="d">07/18 — 02/19</div><div><b>Management Trainee Programme</b><b>Bernhard Schulte GmbH &amp; Co. KG</b><b>Singapore, Cyprus, Newcastle (UK)</b><p>Participating in the Schulte Group‘s international management trainee programme. Focussing on software solutions, renewable energies, CFO Office and tanker owning business.</p></div></div><div class="wk"><div class="d">10/17 — 06/18</div><div><b>Technical Purchaser</b><b>Columbia Shipmanagement (Deutschland) GmbH</b><b>Hamburg, Germany</b><p>Fleet supply in accordance with international regulations and coordination of company warehouses.</p></div></div><div class="wk"><div class="d">10/14 — 09/17</div><div><b>Dual Student</b><b>Columbia Shipmanagement (Deutschland) GmbH</b><b>Hamburg, Germany</b><p>Alternating 3-month cycles of practical experience and academic study within the Schoeller Holding group.</p></div></div></div></div></div></div><canvas id="dots"></canvas><div id="cursor"></div>
+<script>
+(function(){
+var PAGES={"1": ["assets/img-02.jpg", "assets/htcah/01-industrial-revolution-painting.jpg", "assets/htcah/02-neues-museum-drawing.jpg", "assets/htcah/03-karl-marx-hof-laundry-sepia.jpg", "assets/htcah/04-demolition-roststrasse.jpg", "assets/htcah/05-historic-speech-bw.jpg", "assets/htcah/06-historic-crowd.jpg", "assets/htcah/07-brick-format-reichsformat.jpg", "assets/htcah/08-brick-wall-a.jpg", "assets/htcah/09-google-search-flats.jpg", "assets/htcah/10-map-brandenburg-overlay.jpg", "assets/htcah/11-berlin-aerial-markers.jpg", "assets/htcah/12-courtyard-football.jpg", "assets/htcah/13-facade-windows-sky.jpg", "assets/htcah/14-group-photo-protest.jpg", "assets/htcah/15-retten-flora-sign.jpg", "assets/htcah/16-leerstand-flyer.jpg", "assets/htcah/17-tagesspiegel-article.jpg", "assets/htcah/18-kleine-anfrage-letter.jpg", "assets/htcah/19-sign-theodor-heuss-saal.jpg", "assets/htcah/20-hall-corridor.jpg", "assets/htcah/21-chairs-rows-bw.jpg", "assets/htcah/22-meeting-hall-bw-a.jpg", "assets/htcah/23-floor-opening-timber.jpg", "assets/htcah/24-plan-ground-floor.jpg", "assets/htcah/25-plan-typical-floor.jpg", "assets/htcah/26-plan-second-floor.jpg", "assets/htcah/27-section-stair-house.jpg", "assets/htcah/28-elevation-facade.jpg", "assets/htcah/29-section-and-window-elevations.jpg", "assets/htcah/30-wall-layers-detail.jpg", "assets/htcah/31-axonometric-room-1.jpg", "assets/htcah/32-axonometric-room-2.jpg", "assets/htcah/33-axonometric-room-3.jpg", "assets/htcah/34-axonometric-bay-structure.jpg", "assets/htcah/35-timber-joint-axonometric-green.jpg", "assets/htcah/36-loft-brick-column.jpg", "assets/htcah/37-interior-window-blue-wall-a.jpg", "assets/htcah/38-attic-roof-truss.jpg", "assets/htcah/39-facade-yellow-frames.jpg", "assets/htcah/40-booklet-on-concrete-a.jpg"], "2": ["assets/ws-men-feminism.jpg", "assets/ws-programme.jpg", "assets/ws-argus-critical-evenings.jpg"], "3": ["assets/img-03.jpg", "assets/reparaturhaus/01.jpg", "assets/reparaturhaus/02.jpg", "assets/reparaturhaus/03.jpg", "assets/reparaturhaus/04.jpg", "assets/reparaturhaus/05.jpg", "assets/reparaturhaus/06.jpg", "assets/reparaturhaus/07.jpg", "assets/reparaturhaus/08.jpg", "assets/reparaturhaus/09.jpg", "assets/reparaturhaus/10.jpg", "assets/reparaturhaus/11.jpg"], "4": ["assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png"], "5": ["assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png"], "6": ["assets/placeholder-horizontal.png", "assets/placeholder-vertical.png"], "7": ["assets/placeholder-horizontal.png"], "8": ["assets/placeholder-horizontal.png", "assets/placeholder-vertical.png"], "9": ["assets/arch-bk/01.jpg", "assets/arch-bk/02.jpg", "assets/arch-bk/03.jpg", "assets/arch-bk/04.jpg", "assets/arch-bk/05.jpg", "assets/arch-bk/06.jpg"], "10": ["assets/kulturfabrik/01-cover-render.jpg", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png"], "11": ["assets/repair-link/01-cover.jpg", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-square.png", "assets/placeholder-square.png", "assets/placeholder-square.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png"], "12": ["assets/placeholder-vertical.png", "assets/placeholder-square.png", "assets/placeholder-square.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-vertical.png"], "13": ["assets/ostbahnhof-graz/01-visualisation.jpg"], "14": ["assets/sense-of-wondering/01-rock-photo.jpg", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-square.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png", "assets/placeholder-horizontal.png"], "15": ["assets/objects/01-welding.jpg", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-horizontal.png"], "16": ["assets/material-explorations/01-stones.jpg", "assets/material-explorations/02-stone-render.jpg", "assets/placeholder-horizontal.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/placeholder-vertical.png", "assets/material-explorations/10-ribbed-glass-landscape.jpg", "assets/material-explorations/11-ribbed-glass-portrait.jpg"]};
+var AR={"assets/reparaturhaus/01.jpg": 0.81, "assets/reparaturhaus/02.jpg": 0.6667, "assets/reparaturhaus/03.jpg": 0.6667, "assets/reparaturhaus/04.jpg": 0.6667, "assets/reparaturhaus/05.jpg": 0.6667, "assets/reparaturhaus/06.jpg": 0.6667, "assets/reparaturhaus/07.jpg": 0.6667, "assets/reparaturhaus/08.jpg": 1.5, "assets/reparaturhaus/09.jpg": 0.6667, "assets/reparaturhaus/10.jpg": 1.5, "assets/reparaturhaus/11.jpg": 0.6667, "assets/arch-bk/01.jpg": 0.7261, "assets/arch-bk/02.jpg": 0.75, "assets/arch-bk/03.jpg": 1.3333, "assets/arch-bk/04.jpg": 0.8, "assets/arch-bk/05.jpg": 0.8, "assets/arch-bk/06.jpg": 0.75, "assets/htcah/01-industrial-revolution-painting.jpg": 1.8058, "assets/htcah/02-neues-museum-drawing.jpg": 0.7692, "assets/htcah/03-karl-marx-hof-laundry-sepia.jpg": 1.4175, "assets/htcah/04-demolition-roststrasse.jpg": 1.4139, "assets/htcah/05-historic-speech-bw.jpg": 1.0, "assets/htcah/06-historic-crowd.jpg": 1.6705, "assets/htcah/07-brick-format-reichsformat.jpg": 0.6941, "assets/htcah/08-brick-wall-a.jpg": 0.75, "assets/htcah/09-google-search-flats.jpg": 1.6935, "assets/htcah/10-map-brandenburg-overlay.jpg": 1.4143, "assets/htcah/11-berlin-aerial-markers.jpg": 1.4947, "assets/htcah/12-courtyard-football.jpg": 0.7485, "assets/htcah/13-facade-windows-sky.jpg": 1.3333, "assets/htcah/14-group-photo-protest.jpg": 1.3333, "assets/htcah/15-retten-flora-sign.jpg": 1.436, "assets/htcah/16-leerstand-flyer.jpg": 1.4594, "assets/htcah/17-tagesspiegel-article.jpg": 1.07, "assets/htcah/18-kleine-anfrage-letter.jpg": 0.705, "assets/htcah/19-sign-theodor-heuss-saal.jpg": 0.7129, "assets/htcah/20-hall-corridor.jpg": 1.3333, "assets/htcah/21-chairs-rows-bw.jpg": 1.4378, "assets/htcah/22-meeting-hall-bw-a.jpg": 1.4425, "assets/htcah/23-floor-opening-timber.jpg": 0.7075, "assets/htcah/24-plan-ground-floor.jpg": 1.1934, "assets/htcah/25-plan-typical-floor.jpg": 1.4354, "assets/htcah/26-plan-second-floor.jpg": 0.6145, "assets/htcah/27-section-stair-house.jpg": 1.8335, "assets/htcah/28-elevation-facade.jpg": 1.6315, "assets/htcah/29-section-and-window-elevations.jpg": 1.1502, "assets/htcah/30-wall-layers-detail.jpg": 0.4954, "assets/htcah/31-axonometric-room-1.jpg": 0.9441, "assets/htcah/32-axonometric-room-2.jpg": 0.9441, "assets/htcah/33-axonometric-room-3.jpg": 0.9441, "assets/htcah/34-axonometric-bay-structure.jpg": 0.643, "assets/htcah/35-timber-joint-axonometric-green.jpg": 0.7085, "assets/htcah/36-loft-brick-column.jpg": 0.713, "assets/htcah/37-interior-window-blue-wall-a.jpg": 0.716, "assets/htcah/38-attic-roof-truss.jpg": 1.3333, "assets/htcah/39-facade-yellow-frames.jpg": 0.7503, "assets/htcah/40-booklet-on-concrete-a.jpg": 0.7535, "assets/img-02.jpg": 0.7511, "assets/ws-men-feminism.jpg": 0.7891, "assets/ws-programme.jpg": 1.4144, "assets/ws-argus-critical-evenings.jpg": 0.8, "assets/kulturfabrik/01-cover-render.jpg": 0.9525, "assets/repair-link/01-cover.jpg": 1.054, "assets/ostbahnhof-graz/01-visualisation.jpg": 1.0171, "assets/sense-of-wondering/01-rock-photo.jpg": 0.7349, "assets/objects/01-welding.jpg": 0.6524, "assets/material-explorations/01-stones.jpg": 1.4169, "assets/material-explorations/02-stone-render.jpg": 0.7188, "assets/material-explorations/10-ribbed-glass-landscape.jpg": 1.5389, "assets/material-explorations/11-ribbed-glass-portrait.jpg": 0.6624};
+// Objects (p15): Datum unbekannt, Platzhalter Jan 2023
+// Datum je Projekt (Reihenfolge wie auf der Seite, neueste zuerst); [Jahr, Monat] — bitte bei Bedarf anpassen
+var DATES=[[2026,6],[2026,4],[2026,3],[2025,9],[2025,6],[2025,6],[2025,4],[2025,1],[2024,7],[2024,6],[2024,1],[2024,1],[2023,6],[2023,5],[2023,1],[2023,1]];
+var CONF=['#CEF932','#0381ED','#FC7B00','#FF9FF3','#009640','#FBD12C','#FF0C31','#AE78D2'];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var W=innerWidth,H=innerHeight;
+addEventListener('resize',function(){W=innerWidth;H=innerHeight;});
+var hero=document.getElementById('hero'),hg=hero.querySelector('.hg'),lb=document.getElementById('lb'),lbin=document.getElementById('lbin');
+var ht=document.getElementById('ht'),htb=ht.querySelector('b'),hts=ht.querySelector('span'),dotsEl=document.getElementById('dots'),nav=document.querySelector('.top'),cvo=document.getElementById('cvo'),cvp=document.getElementById('cvp');
+var sb=document.getElementById('sb'),sc=document.getElementById('sc'),sbl=document.getElementById('sbl'),sbCur=-1,sbTimer=0,fly=document.getElementById('fly'),ph=document.getElementById('ph'),rowN=0,rowDots=[],rowStep=0,rowFi=-1,sbTh=0,nodes=[],rowEl=null,mk=null;
+var projs=[].slice.call(document.querySelectorAll('.proj')),fades=[].slice.call(document.querySelectorAll('.fade')),scrollers=[].slice.call(document.querySelectorAll('.scroller'));
+function kind(s){return /vertical/.test(s)?'v':/square/.test(s)?'sq':'';}
+function ar(s){return AR[s]||(kind(s)==='v'?979/1386:kind(s)==='sq'?1:1962/1386);}
+function setAr(im,u){var r=ar(u);im.style.setProperty('--ar',r);im.style.aspectRatio=r;}
+[].forEach.call(document.querySelectorAll('img[data-k]'),function(im){var u=PAGES[im.dataset.n][im.dataset.k];im.src=u;setAr(im,u);});
+fades.forEach(function(el){el._sec=el.closest('.proj');el._pic=el.classList.contains('pic')?el:el.querySelector('.pic');});
+function sm(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
+function pcol(v){var n=CONF.length,i=Math.floor(v),t=v-i;function C(k){k=Math.min(k,8);return hexc(CONF[(k*3+1)%n]);}return mixa(C(i),C(i+1),t);}
+function wcol(v){var i=Math.floor(v),t=v-i;function C(k){return hexc(CONF[((((k%9)+9)%9)*3+1)%CONF.length]);}return mixc(C(i),C(i+1),t);}
+function hexc2(c){var m=c.match(/\d+/g);return[+m[0],+m[1],+m[2]];}
+function hexc(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)];}
+function mixa(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+function mixc(a,b,t){var c=mixa(a,b,t);return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')';}
+function box(r,o,list){if(o>.12&&r.right>0&&r.left<W&&r.bottom>0&&r.top<H)list.push({l:r.left,t:r.top,r:r.right,b:r.bottom});}
+function tick(){
+  var y=scrollY,obs=[];
+  var ho=1-sm(H*.1,H*.7,y);hero.style.opacity=ho;
+  var hw=ht.offsetWidth,hh=ht.offsetHeight,pp=sm(0,H*.7,y),gTop=hg.getBoundingClientRect().top+y;
+  var sx=(W-hw)/2,sy=gTop-hh-16,ex=24,ey=sy;
+  ht.style.transform='translate3d('+(sx+(ex-sx)*pp)+'px,'+(sy+(ey-sy)*pp)+'px,0)';
+  htb.style.transform='translateX('+((hw-htb.offsetWidth)/2*(1-pp))+'px)';
+  hts.style.transform='translateX('+((hw-hts.offsetWidth)/2*(1-pp))+'px)';nav.style.opacity=sm(H*.5,H*.9,y);
+  var sbo=sm(H*.5,H*.9,y),sbY=sy+hh+22;
+  sb.style.opacity=sbo;sc.style.opacity=sbo*.4;sb.style.transform=sc.style.transform='translate3d('+ex+'px,'+sbY+'px,0)';
+  var cvOn=cvo.classList.contains('on');dotsEl.style.opacity=lb.classList.contains('on')?0:1;
+  if(cvOn){box(cvp.getBoundingClientRect(),1,obs);}
+  else if(!lb.classList.contains('on')){
+    box(hg.getBoundingClientRect(),ho,obs);box(document.getElementById('mo').getBoundingClientRect(),ho,obs);
+    var best=0,bo=-1;
+    projs.forEach(function(s,i){var r=s.getBoundingClientRect();s._ov=1-sm(.28,.6,Math.abs(r.top+r.height/2-H/2)/H);if(s._ov>bo){bo=s._ov;best=i;}});
+    var cs=[];
+    projs.forEach(function(s2){var r=s2.getBoundingClientRect();cs.push(r.top+y+r.height/2);});
+    var yc=y+H/2,pf=0;
+    for(var k=0;k<DATES.length;k++){if(yc>=cs[k])pf=k+Math.max(0,Math.min(1,(yc-cs[k])/Math.max(1,cs[k+1]-cs[k])));}
+    var NP=DATES.length,th=Math.max(120,H-sbY-64),vstep=th/(NP-1),pfc=Math.max(0,Math.min(NP-1,pf)),di=Math.round(pfc);
+    if(th!==sbTh){ // senkrechte Leiste mit einem bunten Punkt je Projekt
+      sbTh=th;sc.textContent='';nodes=[];rowDots=[];rowN=-1;
+      for(var j=0;j<NP;j++){var nd=document.createElement('i');nd.className='x';nd.style.cssText='width:7px;height:7px;left:2px;top:'+(j*vstep-3)+'px';sc.appendChild(nd);nodes.push(nd);}
+      rowEl=document.createElement('b');sc.appendChild(rowEl);
+      mk=document.createElement('i');mk.style.cssText='width:5.2px;height:5.2px;left:0;top:0;margin:-2.6px 0 0 -2.6px;opacity:0';sc.appendChild(mk);
+    }
+    var items=projs[di].querySelectorAll('.strip>*'),N=items.length;
+    if(di!==sbCur||N!==rowN){ // aktives Projekt: ein Punkt je Bild, rechts vom Projektpunkt
+      sbCur=di;rowN=N;rowEl.textContent='';rowDots=[];rowFi=-1;rowEl.style.top=(di*vstep)+'px';
+      rowStep=N>1?Math.min(12,Math.min(150,W-120)/(N-1)):0;var ds=Math.max(2.2,Math.min(4.5,rowStep-1.4));
+      for(var k=1;k<N;k++){var d=document.createElement('i');d.style.cssText='width:'+ds+'px;height:'+ds+'px;left:'+(k*rowStep-ds/2)+'px;top:'+(-ds/2)+'px;transition:transform .25s;';rowEl.appendChild(d);rowDots.push(d);}
+      clearTimeout(sbTimer);var txt=MON[DATES[di][1]-1]+' '+DATES[di][0];
+      sbl.style.opacity=0;sbTimer=setTimeout(function(){sbl.textContent=txt;sbl.style.opacity=1;},sbl.textContent?160:0);
+    }
+    var act=1-sm(.1,.42,Math.abs(pfc-di));
+    var scr=projs[di].querySelector('.scroller'),mxs=Math.max(1,scr.scrollWidth-scr.clientWidth),fImg=N>1?Math.max(0,Math.min(1,scr.scrollLeft/mxs))*(N-1):0,fi=Math.round(fImg);
+        if(fi!==rowFi){rowFi=fi;for(var k3=0;k3<rowDots.length;k3++){rowDots[k3].style.opacity=k3+1<=fi?1:.3;rowDots[k3].style.transform=k3+1===fi?'scale(1.5)':'';}}
+    rowEl.style.opacity=act;
+    var rowW=Math.max(0,(N-1)*rowStep);sbl.style.left=(5+rowW+16)+'px';sbl.style.top=(di*vstep-5)+'px';sbl.style.filter='opacity('+act+')';
+    // Pfeil: wird zum kleinen schwarzen Punkt, fliegt auf die Leiste und läuft als Marker durch die Punkte
+    var pr0=ph.getBoundingClientRect(),ef=sm(0,H*.55,y),cm0=window.__arrowM||0;
+    window.__arrowF=ef>.001?{m:cm0+(1-cm0)*sm(.1,.65,ef),k:sm(0,.3,ef)}:null;
+    var tx=ex+5+act*fImg*rowStep,ty=sbY+pfc*vstep,fs=1-.73*ef;
+    var fx=pr0.left+30+(tx-pr0.left-30)*ef,fyy=pr0.top+30+(ty-pr0.top-30)*ef;
+    var dock=sbo>=.999;mk.style.opacity=dock?1:0;mk.style.transform='translate('+(5+act*fImg*rowStep)+'px,'+(pfc*vstep)+'px)';
+    fly.style.opacity=dock?0:1;fly.style.transform='translate3d('+(fx-30)+'px,'+(fyy-30)+'px,0) scale('+fs+')';
+    fades.forEach(function(el){
+      var r=el._pic.getBoundingClientRect();
+      var oh=Math.min(sm(0,W*.5,r.right),sm(W,W*.5,r.left)),ov=el._sec._ov,o=oh*ov;
+      el.style.opacity=o;el.style.transform='translateY('+((1-ov)*14)+'px)';
+      box(r,o,obs);
+      var cp=el.querySelector('.cap');if(cp)box(cp.getBoundingClientRect(),o,obs);
+    });
+  }else{
+    [].forEach.call(lbin.children,function(im){box(im.getBoundingClientRect(),1,obs);});
+  }
+  window.OBS=obs;
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+document.getElementById('enter').addEventListener('click',function(e){e.preventDefault();document.getElementById('p1').scrollIntoView({behavior:'smooth'});});
+scrollers.forEach(function(sc){
+  var down=false,sx=0,sl=0,moved=false;sc._l=0;
+  sc.addEventListener('scroll',function(){var dx=sc.scrollLeft-sc._l;sc._l=sc.scrollLeft;if(window.__kickX)window.__kickX(dx);},{passive:true});
+  sc.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=sc.scrollLeft;});
+  addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>5)moved=true;sc.scrollLeft=sl-dx;});
+  addEventListener('pointerup',function(){down=false;});
+  sc.addEventListener('click',function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false;}},true);
+});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{root:lb,threshold:.05});
+function openLB(n,k){
+  lbin.innerHTML='';
+  PAGES[n].forEach(function(s){var im=new Image();im.src=s;setAr(im,s);lbin.appendChild(im);io.observe(im);});
+  lb.classList.add('on');document.body.style.overflow='hidden';
+  lb.scrollTop=k?lbin.children[k].offsetTop-56:0;
+}
+function closeLB(){lb.classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('click',function(e){var t=e.target;if(t.classList&&t.classList.contains('pic')&&t.dataset.n)openLB(t.dataset.n,+t.dataset.k||0);});
+document.getElementById('lbx').addEventListener('click',closeLB);
+lb.addEventListener('click',function(e){if(e.target===lb||e.target===lbin)closeLB();});
+function openCV(){cvo.scrollTop=0;cvo.classList.add('on');document.body.style.overflow='hidden';}
+function closeCV(){cvo.classList.remove('on');if(!lb.classList.contains('on'))document.body.style.overflow='';}
+hg.addEventListener('click',openCV);ht.addEventListener('click',openCV);
+document.getElementById('cvx').addEventListener('click',closeCV);
+cvo.addEventListener('click',function(e){if(!cvp.contains(e.target))closeCV();});
+addEventListener('keydown',function(e){if(e.key==='Escape'){closeLB();closeCV();}});
+})();
+</script>
+<script>
+(function () {
+  var COLORS = ['#CEF932', '#0381ED', '#FC7B00', '#FF9FF3', '#009640', '#FBD12C', '#FF0C31', '#AE78D2'];
+  var COUNT = 16, SIZE = 20, R = SIZE / 2;
+  var FLEE_RADIUS = 100;      // kleiner Radius
+  var FLEE_FORCE = 5200;     // flink / nervös
+  var MAX_SPEED = 1500;
+  var BASE_SPEED = 32, IDLE = 14;
+
+  var canvas = document.getElementById('dots');
+  var ctx = canvas.getContext('2d');
+  window.__confNeg = false; // true = negative Konfetti über Bildern (canvas.neg); false = normale Konfetti, weichen Bildern/Text aus
+  window.__setNeg = function (v) { window.__confNeg = v; canvas.classList.toggle('neg', v); };
+  var cursorEl = document.getElementById('cursor');
+  var W = 0, H = 0, dpr = 1, S = 1;
+  var ptr = { x: -9999, y: -9999, active: false };
+  var touchTimer = null;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var oW = W, oH = H;
+    W = window.innerWidth; H = window.innerHeight;
+    S = Math.max(0.8, Math.min(2.6, Math.min(W, H) / 700));
+    if (oW && oH && dots) { for (var k = 0; k < dots.length; k++) { dots[k].x *= W / oW; dots[k].y *= H / oH; } }
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var dots = [];
+  for (var i = 0; i < COUNT; i++) {
+    var a = Math.floor(Math.random() * 4) * Math.PI / 2;
+    dots.push({
+      x: W * (0.2 + Math.random() * 0.6), y: H * (0.2 + Math.random() * 0.6),
+      vx: Math.cos(a) * BASE_SPEED, vy: Math.sin(a) * BASE_SPEED,
+      heading: a, base: a, wobble: 0,
+      turn: 0,                                   // aktuelle Drehrate (rad/s)
+      speed: BASE_SPEED * (0.6 + Math.random() * 0.9),
+      t: 0, dur: 1, peak: 0, fleeCool: 0, nextBreak: 1, beatSeen: -1, ghost: 0, wig: 0, free: i % 3 === 2, freeT: 1 + Math.random() * 4,          // Zeit bis zum "Bahnwechsel"
+      color: COLORS[i % COLORS.length]
+    });
+  }
+
+  function onMove(e) {
+    ptr.x = e.clientX; ptr.y = e.clientY;
+    if (e.pointerType === 'mouse') {
+      ptr.active = true;
+      cursorEl.style.opacity = 1;
+      cursorEl.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+    }
+  }
+  window.addEventListener('pointermove', onMove, { passive: true });
+  window.addEventListener('pointerdown', function (e) {
+    onMove(e);
+    if (e.pointerType !== 'mouse') {
+      ptr.active = true;
+      clearTimeout(touchTimer);
+    }
+  }, { passive: true });
+  function touchEnd(e) {
+    if (e.pointerType !== 'mouse') {
+      clearTimeout(touchTimer);
+      touchTimer = setTimeout(function () { ptr.active = false; }, 450);
+    }
+  }
+  window.addEventListener('pointerup', touchEnd, { passive: true });
+  window.addEventListener('pointercancel', touchEnd, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () {
+    ptr.active = false; cursorEl.style.opacity = 0;
+  });
+
+  // Gemeinsamer Takt: alle Punkte sprinten im Beat, die Richtung folgt einem Muster
+  var beatN = 0, beatT = 0, BEAT = 3.6, pattern = 0;
+  function patternDir(d, i) {
+    var P = Math.PI / 2;
+    if (Math.random() < 0.08) { d.base = Math.floor(Math.random() * 4) * P; return; } // Ausreißer
+    if (pattern === 0) {            // Reihen: abwechselnd rechts/links
+      d.base = ((i + beatN) % 2 === 0) ? 0 : Math.PI;
+    } else if (pattern === 1) {     // Spalten: abwechselnd runter/hoch
+      d.base = ((i + beatN) % 2 === 0) ? P : -P;
+    } else if (pattern === 2) {     // Marsch im Quadrat, gegenläufig
+      d.base = (i % 2 ? 1 : -1) * beatN * P;
+    } else {                        // Atmen: vom Zentrum weg / zur Mitte hin
+      var dx = d.x - W / 2, dy = d.y - H / 2, out = (beatN % 2 === 0) ? 1 : -1;
+      if (Math.abs(dx) > Math.abs(dy)) d.base = (dx * out > 0) ? 0 : Math.PI;
+      else d.base = (dy * out > 0) ? P : -P;
+    }
+  }
+
+  // Sprint: Strecke + Dauer, Tempo folgt einer Glockenkurve (langsam → extrem schnell → langsam)
+  function newSprint(d, flee) {
+    function roomFor(b) {
+      var cx = Math.cos(b), cy = Math.sin(b);
+      return cx > 0.5 ? W - d.x : cx < -0.5 ? d.x : cy > 0.5 ? H - d.y : d.y;
+    }
+    var dist = (flee ? 70 + Math.random() * 100 : 150 + Math.random() * 50) * S;
+    d.dur = flee ? 0.3 + Math.random() * 0.2 : 0.7 + Math.random() * 0.15;
+    if (roomFor(d.base) < 60 * S) { d.base += Math.PI; }
+    dist = Math.min(dist, Math.max(30, roomFor(d.base) - R - 4));
+    d.t = 0;
+    d.peak = dist / (d.dur * 0.4244);
+  }
+
+  var kickX = 0; window.__kickX = function (dx) { kickX += dx; };
+  var scrollAcc = 0, lastSY = window.scrollY;
+  window.addEventListener("scroll", function () { var y = window.scrollY; scrollAcc += y - lastSY; lastSY = y; }, { passive: true });
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    ctx.clearRect(0, 0, W, H);
+    beatT += dt;
+    if (beatT >= BEAT) { beatT -= BEAT; beatN++; if (beatN % 4 === 0) pattern = (pattern + 1) % 4; }
+    var sa = Math.max(-200, Math.min(200, scrollAcc)); scrollAcc = 0;
+    var sxv = Math.max(-200, Math.min(200, kickX)); kickX = 0;
+
+    for (var i = 0; i < dots.length; i++) {
+      var d = dots[i];
+      if (sxv) { d.vx -= sxv * 3 * (0.6 + ((i * 37) % 80) / 100); }
+      if (sa) { var mm = 0.6 + ((i * 37) % 80) / 100; d.vy -= sa * 3 * mm; d.vx += (Math.random() - 0.5) * Math.abs(sa) * 2.5; }
+
+      // organisches Wandern: Drehrate driftet zufällig, wird zur Mitte zurückgezogen
+      d.turn += (Math.random() - 0.5) * 3 * dt;
+      d.turn *= (1 - 1.2 * dt);
+      d.wobble += d.turn * dt;
+      d.wobble *= (1 - 0.6 * dt);
+      d.wobble = Math.max(-0.2, Math.min(0.2, d.wobble));
+      d.heading = d.base + d.wobble;
+
+      // gelegentlich Bahn verlassen: leichter Richtungswechsel
+      d.t += dt; d.fleeCool -= dt; d.ghost -= dt;
+      if (d.free) { d.freeT -= dt; d.nextBreak = d.freeT <= 0 ? 0 : 1; }
+      else d.nextBreak = (d.beatSeen !== beatN && beatT >= (d.x / W) * 0.5) ? 0 : 1;
+      if (d.nextBreak <= 0) {
+        d.beatSeen = beatN; if (Math.random() < 0.05) d.ghost = 1 + Math.random() * 1.2;
+        if (d.free) { var cx = W / 2 - d.x, cy = H / 2 - d.y;
+          d.base = Math.random() < 0.4 ? (Math.abs(cx) > Math.abs(cy) ? (cx > 0 ? 0 : Math.PI) : (cy > 0 ? Math.PI / 2 : -Math.PI / 2)) : Math.floor(Math.random() * 4) * Math.PI / 2;
+          d.freeT = 2.8 + Math.random() * 3.2; }
+        else patternDir(d, i);
+        d.wobble += (Math.random() - 0.5) * 0.2;
+        d.turn += (Math.random() - 0.5) * 0.8;
+        newSprint(d, false);
+        d.nextBreak = d.dur + 0.1 + Math.random() * 0.7;
+      }
+
+      // Steuerung Richtung Wunschgeschwindigkeit
+      var u = Math.min(1, d.t / d.dur);
+      d.speed = IDLE * S + d.peak * Math.pow(Math.sin(Math.PI * u), 3);
+      var tx = Math.cos(d.heading) * d.speed;
+      var ty = Math.sin(d.heading) * d.speed;
+      d.vx += (tx - d.vx) * Math.min(1, 9 * dt);
+      d.vy += (ty - d.vy) * Math.min(1, 9 * dt);
+
+      // Ausweichen vor Cursor / Tap
+      if (ptr.active) {
+        var dx = d.x - ptr.x, dy = d.y - ptr.y;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        var FR = FLEE_RADIUS * S;
+        if (dist < FR) {
+          var k = 1 - dist / FR;
+          var f = FLEE_FORCE * k * k;
+          // leicht seitlich versetzt für organisches Ausscheren
+          var side = (Math.random() - 0.5) * 0.9;
+          var nx = dx / dist, ny = dy / dist;
+          d.vx += (nx - ny * side) * f * dt;
+          d.vy += (ny + nx * side) * f * dt;
+          d.base = Math.round(Math.atan2(d.vy, d.vx) / (Math.PI / 2)) * Math.PI / 2; d.wobble = 0;
+          if (!(d.fleeCool > 0)) { newSprint(d, true); d.nextBreak = d.dur + 0.1 + Math.random() * 0.5; d.fleeCool = 0.3; }
+        }
+      }
+
+      // Tempolimit
+      var sp = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+      var ms = MAX_SPEED * S; if (sp > ms) { d.vx *= ms / sp; d.vy *= ms / sp; }
+
+      d.x += d.vx * dt;
+      d.y += d.vy * dt;
+
+      // Ränder: weich zurücklenken statt abprallen
+      var m = 20;
+      if (d.x < m) { d.vx += 400 * dt; d.base = 0; d.wobble = 0; }
+      if (d.x > W - m) { d.vx -= 400 * dt; d.base = Math.PI; d.wobble = 0; }
+      if (d.y < m) { d.vy += 400 * dt; d.base = Math.PI / 2; d.wobble = 0; }
+      if (d.y > H - m) { d.vy -= 400 * dt; d.base = -Math.PI / 2; d.wobble = 0; }
+      var obs = window.OBS || [];
+      if (!(d.ghost > 0) && !window.__confNeg) {
+        for (var q = 0; q < obs.length; q++) {
+          var o = obs[q], mg = R + 2, L = o.l - mg, RR = o.r + mg, T = o.t - mg, B = o.b + mg;
+          if (d.x > L && d.x < RR && d.y > T && d.y < B) {
+            var dl = d.x - L, dr = RR - d.x, dtp = d.y - T, dbt = B - d.y, mn = Math.min(dl, dr, dtp, dbt);
+            if (mn === dl) { d.x = L; d.vx = Math.min(d.vx, 0); d.base = (d.vy >= 0 ? 1 : -1) * Math.PI / 2; }
+            else if (mn === dr) { d.x = RR; d.vx = Math.max(d.vx, 0); d.base = (d.vy >= 0 ? 1 : -1) * Math.PI / 2; }
+            else if (mn === dtp) { d.y = T; d.vy = Math.min(d.vy, 0); d.base = d.vx >= 0 ? 0 : Math.PI; }
+            else { d.y = B; d.vy = Math.max(d.vy, 0); d.base = d.vx >= 0 ? 0 : Math.PI; }
+            d.wobble = 0;
+          }
+        }
+      }
+      d.x = Math.max(R, Math.min(W - R, d.x));
+      d.y = Math.max(R, Math.min(H - R, d.y));
+
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, R, 0, Math.PI * 2);
+      if (window.__confNeg) { if (!d.inv) { d.inv = '#' + [1, 3, 5].map(function (k) { return ('0' + (255 - parseInt(d.color.substr(k, 2), 16)).toString(16)).slice(-2); }).join(''); } ctx.fillStyle = d.inv; }
+      else ctx.fillStyle = d.color;
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(function(){
+var g=document.getElementById('mog'),ln=g.querySelectorAll('line'),PAL=['#0381ED','#FC7B00','#FF9FF3','#009640','#FBD12C','#FF0C31','#AE78D2','#CEF932'];
+// Pfeil nach unten aus drei Linien mit runden Enden; im Punkt laufen alle Enden im Zentrum zusammen und die Strichstärke wächst auf Punktgröße
+var BOT=[0,13],TOP=[0,-14],WL=[-10,3],WR=[10,3];
+var SEG=[[TOP,BOT,0,.12],[BOT,WL,.14,.04],[BOT,WR,.08,.2]]; // [Start, Ende, Verzögerung Start, Verzögerung Ende]
+var W0=1.5,W1=19;
+var OFF=[[0,-11],[-11,6],[11,6]]; // Auseinanderdriften: Schaft nach oben, Flügel nach aussen
+function clamp(x){return x<0?0:x>1?1:x;}
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function back(t){var c1=1.9,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
+function hex(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)];}
+var HOLD_A=1.3,TO_DOT=1.2,HOLD_D=.9,TO_ARR=1.2,CYC=HOLD_A+TO_DOT+HOLD_D+TO_ARR;
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches,ci=Math.floor(Math.random()*PAL.length),lastCyc=-1;
+function lp(a,b,t){return a+(b-a)*t;}
+function frame(ms){
+  var t=ms/1000,cyN=Math.floor(t/CYC),u=t%CYC,m,going=u<HOLD_A+TO_DOT+HOLD_D,k;
+  if(cyN!==lastCyc){lastCyc=cyN;ci=(ci+1+(Math.random()*3|0))%PAL.length;}
+  if(reduce||u<HOLD_A)m=0;
+  else if(u<HOLD_A+TO_DOT)m=(u-HOLD_A)/TO_DOT;
+  else if(u<HOLD_A+TO_DOT+HOLD_D)m=1;
+  else m=1-(u-HOLD_A-TO_DOT-HOLD_D)/TO_ARR;
+  window.__arrowM=m;var FO=window.__arrowF;if(FO)m=FO.m;
+  var wob=Math.sin(t*2.2)*.5*(1-m);
+  // Phase 1: die drei Teile driften auseinander, Phase 2: sie laufen im Zentrum zusammen und werden zum Punkt
+  var sep=ease(clamp(m/.42))*(1-ease(clamp((m-.5)/.5)));
+  for(k=0;k<3;k++){
+    var sg=SEG[k],d0=sg[2],d1=sg[3],a=sg[0],b=sg[1],o=OFF[k],e0,e1;
+    var q=clamp((m-.3)/.7);
+    e0=ease(clamp(q*1.25-(.25-d0)));e1=ease(clamp(q*1.25-(.25-d1)));
+    var ox=o[0]*sep,oy=o[1]*sep;
+    ln[k].setAttribute('x1',(lp(a[0],0,e0)+ox).toFixed(2));ln[k].setAttribute('y1',(lp(a[1],0,e0)+oy).toFixed(2));
+    ln[k].setAttribute('x2',(lp(b[0],0,e1)+ox).toFixed(2));ln[k].setAttribute('y2',(lp(b[1],0,e1)+oy).toFixed(2));
+  }
+  var wq=clamp((m-.3)/.7),wm=ease(wq);
+  g.setAttribute('stroke-width',(W0+(W1-W0)*wm).toFixed(2));
+  var yb=Math.sin(clamp(m)*Math.PI)*-2+wob;
+  g.setAttribute('transform','translate(0 '+yb.toFixed(2)+')');
+  var cm=hex(PAL[ci]),mm=ease(clamp((m-.3)/.6));
+  var kk=FO?FO.k:0;
+  g.setAttribute('stroke','rgb('+[0,1,2].map(function(q){var c=17+(cm[q]-17)*mm;return Math.round(c+(153-c)*kk);}).join(',')+')');
+  if(!reduce)requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body></html>

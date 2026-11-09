@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Spinning Letters with WebGL</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #e9e9e9; /* Light gray background color */
+            cursor: none; /* Hide the default cursor */
+        }
+
+        /* Custom cursor style */
+        #custom-cursor {
+            position: absolute;
+            width: 22px; /* Custom cursor size */
+            height: 22px; /* Custom cursor size */
+            background-color: black;
+            border-radius: 50%;
+            pointer-events: none; /* Ensure the cursor doesn't interfere with mouse events */
+            transform: translate(-50%, -50%); /* Center the cursor on the mouse pointer */
+            z-index: 1000; /* Make sure the cursor is above other elements */
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div> <!-- Custom cursor element -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Version Tracking: v2.01.0001
+        // This is the current version of the code. Future changes will increment the version number accordingly.
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Background color
+        renderer.setClearColor(0xe9e9e9, 1); // Light gray background color
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Bright white ambient light
+        scene.add(ambientLight);
+
+        // Parameters for spinning
+        const baseSpeed = 0.001; // Base speed of rotation
+        const maxSpeedIncrease = 0.0002; // Maximum speed increment
+        const speedChangeDuration = 1500; // 1.5 seconds
+
+        // Define a set of 5 modern bold colors
+        const colors = [
+            0x000000, // Black
+            0xFF4C4C, // Red
+            0xFF9F00, // Orange
+            0x0000FF, // Bright Blue
+            0x39FF14  // Neon Green
+        ];
+
+        const letters = 'PORTFOLIOBYTJARK'; // Uppercase letters
+        let currentLetterIndex = 0;
+        const letterMeshes = [];
+        let cursorPosition = new THREE.Vector3(0, 0, 0);
+        let initialLetterCreated = false; // Flag to track if the initial letter has been created
+
+        // Easing function (ease out)
+        function easeOutQuad(t) {
+            return t * (2 - t);
+        }
+
+        // Function to create a new letter
+        function createLetter(letter, position) {
+            const loader = new THREE.FontLoader();
+            loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', function (font) {
+                // Randomize font size within ±15% of the base size
+                const baseSize = 15;
+                const size = baseSize * (1 + (Math.random() - 0.5) * 0.3); // Random size between 85% and 115%
+
+                const textGeometry = new THREE.TextGeometry(letter, {
+                    font: font,
+                    size: size,
+                    height: 2,
+                    curveSegments: 12,
+                    bevelEnabled: false
+                });
+
+                // Randomize color with decreased probability of black
+                let color;
+                if (Math.random() < 0.50) { // 50% chance of black
+                    color = 0x000000; // Black
+                } else {
+                    color = colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                const textMaterial = new THREE.MeshBasicMaterial({ color: color });
+                const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                scene.add(textMesh);
+
+                // Add to letterMeshes array
+                letterMeshes.push({
+                    mesh: textMesh,
+                    rotationSpeed: baseSpeed + Math.random() * maxSpeedIncrease,
+                    rotationDirection: Math.random() > 0.5 ? 1 : -1, // Random direction
+                    speedChangeStartTime: 0,
+                    currentSpeed: baseSpeed,
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.00002, // Reduced x velocity for smoother movement
+                        (Math.random() - 0.5) * 0.00002, // Reduced y velocity for smoother movement
+                        0 // No movement in the z direction
+                    ),
+                    damping: 0.98, // Increased damping effect for smoother motion
+                    initialPosition: position // Store initial position for stronger attraction
+                });
+
+                // Set the position of the letter
+                textMesh.position.copy(position);
+            });
+        }
+
+        // Click event listener
+        function handleClick(event) {
+            if (!initialLetterCreated) {
+                // Create the first letter in the sequence at the click position
+                const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+                const mouseVector = new THREE.Vector3(mouseX, mouseY, 1).unproject(camera);
+
+                // Calculate direction vector from camera to click point
+                const direction = mouseVector.sub(camera.position).normalize();
+
+                // Calculate distance from camera to a reasonable Z position in the scene
+                const distance = -camera.position.z / direction.z;
+
+                // Calculate the exact 3D position
+                const clickPosition = camera.position.clone().add(direction.multiplyScalar(distance));
+                clickPosition.z = 0; // Ensure the z position is set to 0
+
+                createLetter(letters[currentLetterIndex], clickPosition);
+                initialLetterCreated = true;
+                currentLetterIndex = (currentLetterIndex + 1) % letters.length; // Move to the next letter after initial click
+            } else {
+                // Create the next letter in the sequence at the click position
+                const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+                const mouseVector = new THREE.Vector3(mouseX, mouseY, 1).unproject(camera);
+
+                // Calculate direction vector from camera to click point
+                const direction = mouseVector.sub(camera.position).normalize();
+
+                // Calculate distance from camera to a reasonable Z position in the scene
+                const distance = -camera.position.z / direction.z;
+
+                // Calculate the exact 3D position
+                const clickPosition = camera.position.clone().add(direction.multiplyScalar(distance));
+                clickPosition.z = 0; // Ensure the z position is set to 0
+
+                // Ensure we don't spawn more than the length of the letters array
+                if (currentLetterIndex < letters.length) {
+                    createLetter(letters[currentLetterIndex], clickPosition);
+                    currentLetterIndex = (currentLetterIndex + 1) % letters.length; // Update the letter index for the next click
+                }
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Calculate margins based on the camera view
+            const frustumHeight = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+            const frustumWidth = frustumHeight * camera.aspect;
+            const marginX = frustumWidth / 2 - 10; // Margin from the edges
+            const marginY = frustumHeight / 2 - 10; // Margin from the edges
+
+            letterMeshes.forEach(letter => {
+                const elapsedTime = performance.now() - letter.speedChangeStartTime;
+                if (elapsedTime < speedChangeDuration) {
+                    const t = elapsedTime / speedChangeDuration;
+                    const easedTime = easeOutQuad(t);
+                    letter.currentSpeed = letter.rotationSpeed + maxSpeedIncrease * (1 - easedTime);
+                } else {
+                    letter.currentSpeed = letter.rotationSpeed;
+                }
+
+                letter.mesh.rotation.x += letter.currentSpeed * letter.rotationDirection;
+                letter.mesh.rotation.y += letter.currentSpeed * letter.rotationDirection;
+
+                // Update position based on velocity
+                letter.mesh.position.add(letter.velocity);
+
+                // Bounce off the edges
+                if (letter.mesh.position.x > marginX || letter.mesh.position.x < -marginX) {
+                    letter.velocity.x *= -0.9; // Adjusted bounce damping
+                }
+                if (letter.mesh.position.y > marginY || letter.mesh.position.y < -marginY) {
+                    letter.velocity.y *= -0.9; // Adjusted bounce damping
+                }
+
+                // Ensure letters don't move too far along z-axis
+                letter.mesh.position.z = 0;
+
+                // Stronger attraction to initial position
+                const initialDirection = letter.initialPosition.clone().sub(letter.mesh.position);
+                const initialDistance = initialDirection.length();
+                letter.velocity.add(initialDirection.multiplyScalar(0.002 / initialDistance)); // Adjusted attraction force
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // Event listeners
+        window.addEventListener('click', handleClick);
+
+        window.addEventListener('mousemove', (event) => {
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            cursorPosition.set(mouseX * 100, mouseY * 100, 0); // Ensure z is always 0
+
+            // Update custom cursor position
+            document.getElementById('custom-cursor').style.left = `${event.clientX}px`;
+            document.getElementById('custom-cursor').style.top = `${event.clientY}px`;
+        });
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        camera.position.z = 125; // Adjusted zoom level
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
